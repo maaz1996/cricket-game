@@ -5,7 +5,7 @@ overs = input("How many overs? ")
 
 def start(overs):
     balls = overs*6
-    print("There will be %d overs and %d balls" % (overs, balls))
+    print"There will be %d overs and %d balls"(overs, balls)
 
 
 start(overs)
