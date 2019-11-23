@@ -2,7 +2,7 @@
 using namespace std;
 	class Game { 
 	public: 
-    int x, y; 
+    	int x, y; 
 	};
 	//function based on class Game
 	Game score(int balls){
