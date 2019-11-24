@@ -8,8 +8,7 @@ balls = int(overs)*6
 
 
 def start(overs):
-    print("There will be ", overs, " overs and ", balls,
-          " balls between ", team1, " and ", team2)
+    print ("There will be ",overs," overs and ",balls, "balls between ",team1," and ",team2)
 
 
 start(overs)
