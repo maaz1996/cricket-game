@@ -8,8 +8,7 @@ balls = int(overs)*6
 
 
 def start(overs):
-    print("There will be ", overs, " overs and ", balls,
-          "balls between ", team1, " and ", team2)
+    print("There will be",overs,"overs and",balls,"balls between",team1,"and",team2)
 
 
 start(overs)
@@ -29,6 +28,19 @@ def score(balls):
             runs = 0 + runs
         elif (r == 5 and wickets >= 10):
             runs = 0 + runs
-    print("total runs are", runs)
-    print("wickets lost ", wickets)
-    return runs
+    return runs,wickets
+
+team1score=score(balls)
+team2score=score(balls)
+print("The total Score by",team1,"=",team1score[0],"/",team1score[1])
+print("The total Score by",team2,"=",team2score[0],"/",team2score[1])
+
+if(team1score[0]>team2score[0]):
+    print(team1,"Won by",team1score[0]-team2score[0],"runs")
+elif(team2score[0]>team1score[0]):
+    print(team2,"Won by",team2score[0]-team1score[0],"runs")
+elif(team1score[0]==team2score[0]):
+    print("Match tied between",team1,"and",team2)
+
+
+
