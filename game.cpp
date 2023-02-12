@@ -44,9 +44,9 @@ int main()
 	//defining a variable for Class Game to access the values of function
 	Game varteam1, varteam2;
 	string team1, team2;
-	cout << "Select team1_";
+	cout << "Select team1_"<<endl;
 	cin >> team1;
-	cout << "Select team2_";
+	cout << "Select team2_"<<endl;
 	cin >> team2;
 	int overs;
 	cout << "Enter the no. of Overs to be Played in this Match between " << team1 << " and " << team2 << endl;

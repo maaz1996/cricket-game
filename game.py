@@ -1,7 +1,7 @@
 from random import randint
 
-team1 = input("Enter Team1_")
-team2 = input("Enter Team2_")
+team1 = input("Enter Team1_ ")
+team2 = input("Enter Team2_ ")
 overs = input("How many overs? ")
 
 balls = int(overs)*6
