@@ -506,3 +506,192 @@ body {
 .scoreboard.away-india .team-away .crest-away { color: #fff; background: #1684d2; }
 .scoreboard.home-pakistan .team-home .crest-home,
 .scoreboard.away-pakistan .team-away .crest-away { color: #fff; background: #087343; }
+
+body { font-size: 15px; }
+.topbar { height: 78px; border-bottom-color: #34443a; }
+.brand-name { font-size: 19px; }
+.nav-link { font-size: 12px; font-weight: 750; letter-spacing: .55px; }
+.season-label { font-size: 10px; font-weight: 650; }
+.page-shell { width: min(1200px, calc(100% - 64px)); }
+.page-intro { padding-top: 48px; }
+.page-intro h1 { font-size: clamp(42px, 5vw, 58px); font-weight: 800; letter-spacing: -2.5px; }
+.intro-copy { color: #c1cbbd; font-size: 15px; }
+.eyebrow, .match-id { font-size: 10px; font-weight: 700; }
+
+.scoreboard {
+  border: 1px solid #526953;
+  border-radius: 12px;
+  box-shadow: 0 20px 50px #0005, inset 0 1px #ffffff18;
+}
+.scoreboard-topline { min-height: 58px; padding: 0 30px; }
+.live-label, .format-label { font-size: 11px; font-weight: 700; letter-spacing: .9px; }
+.scoreboard-content { padding: 25px 32px 22px; }
+.innings-label { color: #d3ddce; font-size: 11px; font-weight: 700; letter-spacing: .9px; }
+.team-name { font-size: 13px; font-weight: 800; letter-spacing: .7px; }
+.team-overs { color: #c2d0bd; font-size: 10px; font-weight: 650; }
+.live-score-center {
+  min-height: 146px;
+  border: 1px solid #e8b66d75;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #f3b95a22, #f3b95a08 72%);
+  box-shadow: inset 0 0 32px #edb25c0b, 0 8px 26px #0002;
+}
+.live-score-team, .live-score-overs { color: #e0e8d9; font-size: 10px; font-weight: 750; letter-spacing: .9px; }
+.live-score { font-size: clamp(52px, 6vw, 72px); font-weight: 800; letter-spacing: -3px; text-shadow: 0 3px 24px #f4ba6030; }
+.score-divider { margin: 18px 0; background: #ffffff30; }
+.scoreboard-footer { gap: 20px; }
+.footer-label { color: #b7c8b3; font-size: 10px; font-weight: 750; }
+.footer-value { font-size: 14px; font-weight: 650; }
+.run-rate-block .footer-value { color: #f1d39f; font-size: 11px; font-weight: 700; }
+
+.pitch-card, .action-card, .commentary-card, .recent-card, .scorecard-card {
+  border-radius: 12px;
+  box-shadow: 0 16px 42px #0003, inset 0 1px #ffffff08;
+}
+.pitch-heading { min-height: 76px; padding: 16px 24px; }
+.pitch-heading h2 { font-size: 23px; font-weight: 800; }
+.pitch-live { padding: 9px 12px; border: 1px solid #526044; border-radius: 999px; color: #f1d39f; background: #d69a3920; font-size: 9px; font-weight: 750; }
+.pitch-live .live-dot { background: #efb44e; box-shadow: 0 0 0 4px #efb44e20; }
+.pitch-player-strip { min-height: 70px; padding: 10px 22px; }
+.player-label { color: #b8c5b3; font-size: 9px; font-weight: 700; letter-spacing: .6px; }
+.pitch-player strong { font-size: 11px; font-weight: 750; }
+
+.action-card { padding: 24px; }
+.card-heading { margin-bottom: 23px; }
+.card-kicker { color: #f0c37f; font-size: 10px; font-weight: 750; letter-spacing: 1px; }
+.action-card h2 { font-size: 27px; font-weight: 800; letter-spacing: -.8px; }
+.card-copy { margin-bottom: 22px; color: #c1cbbd; font-size: 13px; line-height: 1.65; }
+.team-picker {
+  gap: 10px;
+  margin: 20px 0 17px;
+  padding: 14px 12px;
+  border-color: #52614f;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #243329, #1d2b21);
+  box-shadow: inset 0 1px #ffffff08;
+}
+.team-picker-label, .field-label { color: #d4dfce; font-size: 10px; font-weight: 750; letter-spacing: .8px; }
+.team-picker-control { min-height: 44px; gap: 9px; padding: 0 10px; border-color: #53634f; border-radius: 6px; background: #111d16; }
+.team-picker-flag { font-size: 19px; }
+.team-picker select { height: 42px; color: #f5f5ec; font-size: 12px; font-weight: 700; }
+.fixed-format-label { margin-bottom: 18px; color: #e4d3ad; font-size: 10px; font-weight: 750; }
+.overs-field { margin: 18px 0 20px; }
+.overs-field legend, .pace-field legend { margin-bottom: 10px; }
+.overs-options, .pace-options { gap: 9px; }
+.overs-option span, .pace-option span {
+  min-height: 40px;
+  border-color: #465648;
+  border-radius: 7px;
+  color: #d2dbce;
+  background: #202c23;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+.overs-option input:checked + span, .pace-option input:checked + span {
+  border-color: #e9b46b;
+  color: #fff3df;
+  background: linear-gradient(135deg, #72532c, #493722);
+  box-shadow: 0 0 0 1px #e9b46b40, 0 5px 16px #0003;
+}
+.overs-hint, .pace-hint { color: #b8c4b4; font-size: 11px; line-height: 1.5; }
+.setup-pace-field { margin: 18px 0 21px; }
+.setup-pace-field .pace-options { grid-template-columns: 1fr 1fr; }
+.setup-pace-field .pace-option span { min-height: 48px; padding: 5px 8px; text-align: center; }
+.primary-button, .secondary-button {
+  min-height: 50px;
+  padding: 0 17px;
+  border-radius: 8px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .75px;
+  box-shadow: 0 7px 20px #0003, inset 0 1px #ffffff40;
+}
+.primary-button { background: linear-gradient(110deg, #f1c47e, #dda14f); }
+.primary-button:hover:not(:disabled) { transform: translateY(-2px); background: linear-gradient(110deg, #ffd594, #ecad58); box-shadow: 0 11px 26px #e0a65335; }
+.primary-button > span { font-size: 18px; }
+.secondary-button { min-height: 44px; border-radius: 7px; font-size: 10px; }
+.quick-actions .secondary-button { min-height: 42px; padding: 0 9px; font-size: 9px; font-weight: 750; letter-spacing: .2px; }
+.secondary-button:hover:not(:disabled) { transform: translateY(-1px); border-color: #dba95d; color: #fff0d4; background: #38402e; }
+.text-button { margin-top: 16px; color: #c2ccbe; font-size: 12px; font-weight: 650; }
+.text-button:hover { color: #f2bf75; }
+.game-hint { color: #b8c4b4; font-size: 11px; }
+.next-ball-panel { margin-top: 18px; padding: 16px; border-color: #425344; border-radius: 8px; background: linear-gradient(145deg, #223127, #1b281f); }
+.next-ball-top { color: #d0ddca; font-size: 9px; font-weight: 750; }
+.next-ball-teams { color: #f1f3e8; font-size: 15px; font-weight: 800; }
+.next-ball-panel > p { color: #bdc9b9; font-size: 11px; }
+.mini-scoreline { color: #bbc8b6; font-size: 9px; font-weight: 700; }
+.mini-scoreline strong { color: #f6d79e; font-size: 14px; font-weight: 800; }
+
+.stat-card { min-height: 105px; padding: 17px; border-radius: 9px; box-shadow: 0 8px 22px #0002; }
+.stat-label { color: #bac6b7; font-size: 9px; font-weight: 750; letter-spacing: .9px; }
+.stat-value { color: #f6f2e7; font-size: 21px; font-weight: 800; }
+.stat-value small { color: #c0caba; font-size: 11px; font-weight: 650; }
+.recent-card { padding: 24px; }
+.section-heading h2, .scorecard-heading h2 { font-size: 27px; font-weight: 800; }
+.delivery-count { padding: 8px 11px; border: 1px solid #435343; border-radius: 999px; color: #e2d0aa; background: #202d23; font-size: 9px; font-weight: 750; }
+.recent-content > p { color: #bbc6b8; font-size: 13px; }
+.ball-result { width: 34px; height: 34px; border-radius: 50%; font-size: 12px; font-weight: 800; }
+.commentary-card { min-height: 160px; padding: 21px; }
+.commentary-live { color: #d4dfcc; font-size: 9px; font-weight: 750; }
+.commentary-text { color: #fffdf3; font-size: 16px; font-weight: 650; line-height: 1.6; }
+.commentary-over { color: #c3ae8a; font-size: 9px; font-weight: 750; }
+.scorecard-card { padding: 26px; }
+.scorecard-heading { margin-bottom: 23px; }
+.scorecard-format { color: #c1cdbd; font-size: 9px; font-weight: 750; }
+.innings-card { padding: 18px; border-radius: 8px; }
+.innings-card-heading h3 { color: #f2f2e8; font-size: 15px; font-weight: 800; }
+.innings-card-heading > div > span, .innings-footnote { color: #bac6b6; font-size: 11px; }
+.innings-card-score { color: #fff1d2; font-size: 30px; font-weight: 800; }
+
+button, select, a, input + span { -webkit-tap-highlight-color: transparent; }
+button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible + span {
+  outline: 3px solid #f1bd70;
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .page-shell { width: min(100% - 36px, 620px); }
+  .page-intro { padding-top: 34px; }
+  .scoreboard-topline { padding-right: 20px; padding-left: 20px; }
+  .scoreboard-content { padding-right: 20px; padding-left: 20px; }
+  .action-card { padding: 21px; }
+}
+
+@media (max-width: 600px) {
+  .topbar { height: 64px; }
+  .brand-name { font-size: 16px; }
+  .nav-link { font-size: 9px; }
+  .page-intro h1 { font-size: 39px; }
+  .intro-copy { max-width: 280px; font-size: 13px; line-height: 1.5; }
+  .scoreboard { min-height: unset; }
+  .scoreboard-topline { min-height: 48px; padding-right: 14px; padding-left: 14px; }
+  .live-label, .format-label { font-size: 8px; letter-spacing: .3px; }
+  .scoreboard-content { padding: 18px 13px 16px; }
+  .innings-label { font-size: 9px; }
+  .teams-score { grid-template-columns: minmax(0, 1fr) minmax(112px, 1.2fr) minmax(0, 1fr); gap: 5px; }
+  .team-name { max-width: 70px; font-size: 8px; }
+  .team-overs { font-size: 8px; }
+  .live-score-center { min-height: 108px; padding: 8px 4px; }
+  .live-score { font-size: 34px; }
+  .live-score-team, .live-score-overs { font-size: 7px; letter-spacing: .3px; }
+  .scoreboard-footer { gap: 12px; }
+  .footer-value { font-size: 11px; line-height: 1.4; }
+  .run-rate-block .footer-value { font-size: 9px; }
+  .action-card { padding: 19px; }
+  .action-card h2 { font-size: 24px; }
+  .card-copy { font-size: 12px; }
+  .team-picker { padding: 11px 7px; }
+  .team-picker-control { min-height: 40px; gap: 5px; padding: 0 5px; }
+  .team-picker select { height: 38px; font-size: 10px; }
+  .team-picker-label { font-size: 8px; }
+  .quick-actions { grid-template-columns: 1fr; }
+  .quick-actions .secondary-button { min-height: 42px; font-size: 10px; }
+  .stats-grid { gap: 8px; }
+  .stat-card { min-height: 89px; padding: 12px 10px; }
+  .stat-value { font-size: 17px; }
+  .recent-card { padding: 19px; }
+  .commentary-text { font-size: 14px; }
+}
