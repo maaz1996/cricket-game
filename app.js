@@ -760,6 +760,10 @@ function startMatch(event) {
   document.querySelector(`input[name="game-pace"][value="${pace}"]`).checked = true;
   updateScoreboard();
   toggleAutoPlay();
+  requestAnimationFrame(() => {
+    ui.scoreboard.focus({ preventScroll: true });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 }
 
 function playOver() {
@@ -896,6 +900,7 @@ function resetMatch() {
   scorecard.secondBatting.innerHTML = '<tr><td colspan="7">Set up a match to see batting figures.</td></tr>';
   scorecard.secondBowling.innerHTML = '<tr><td colspan="6">Bowling figures will appear here.</td></tr>';
   updateTeamPicker();
+  requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
 
 ui.homeTeamSelect.addEventListener('change', updateTeamPicker);
