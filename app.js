@@ -18,6 +18,10 @@ const ui = {
   liveLabel: document.querySelector('#live-label'),
   formatLabel: document.querySelector('#format-label'),
   inningsLabel: document.querySelector('#innings-label'),
+  tossSummary: document.querySelector('#toss-summary'),
+  firstInningsLabel: document.querySelector('#first-innings-label'),
+  firstInningsScore: document.querySelector('#first-innings-score'),
+  scoreboard: document.querySelector('.scoreboard'),
   homeName: document.querySelector('#home-name'),
   awayName: document.querySelector('#away-name'),
   homeCrest: document.querySelector('#home-crest'),
@@ -27,6 +31,10 @@ const ui = {
   liveScoreTeam: document.querySelector('#live-score-team'),
   liveScore: document.querySelector('#live-score'),
   liveScoreOvers: document.querySelector('#live-score-overs'),
+  matchResultCenter: document.querySelector('#match-result-center'),
+  resultCenterWinner: document.querySelector('#result-center-winner'),
+  resultCenterMargin: document.querySelector('#result-center-margin'),
+  resultCenterScores: document.querySelector('#result-center-scores'),
   homeOvers: document.querySelector('#home-overs'),
   awayOvers: document.querySelector('#away-overs'),
   targetLabel: document.querySelector('#target-label'),
@@ -205,6 +213,11 @@ function updateTeamPicker() {
   ui.liveScoreTeam.textContent = 'MATCH PREVIEW';
   ui.liveScore.textContent = '—';
   ui.liveScoreOvers.textContent = `${overs} OVERS PER SIDE`;
+  ui.tossSummary.textContent = 'The toss decides who bats first';
+  ui.firstInningsLabel.textContent = '1ST INNINGS';
+  ui.firstInningsScore.textContent = 'Waiting for the first ball';
+  ui.matchResultCenter.hidden = true;
+  ui.scoreboard.classList.remove('match-finished');
   ui.targetValue.textContent = `${home} vs ${away} · ${overs} overs each`;
   ui.runRateValue.textContent = '0.00 runs per over';
   ui.homeCrest.title = home;
@@ -268,6 +281,21 @@ function updateScoreboard() {
   ui.liveScoreTeam.textContent = `${batting.teamName.toUpperCase()} ${match.finished ? 'FINAL SCORE' : 'BATTING'}`;
   ui.liveScore.textContent = `${batting.runs}/${batting.wickets}`;
   ui.liveScoreOvers.textContent = `${oversText(batting.balls)} / ${match.overs} OVERS`;
+  ui.tossSummary.textContent = `${match.tossWinner} won the toss and elected to ${match.tossDecision}`;
+  ui.firstInningsLabel.textContent = `1ST INNINGS · ${first.teamName.toUpperCase()}`;
+  ui.firstInningsScore.textContent = `${first.runs}/${first.wickets} · ${oversText(first.balls)} overs`;
+  ui.scoreboard.classList.toggle('match-finished', match.finished);
+  ui.matchResultCenter.hidden = !match.finished;
+
+  if (match.finished) {
+    ui.resultCenterWinner.textContent = match.winner ? `${match.winner} WIN` : 'MATCH TIED';
+    ui.resultCenterMargin.textContent = match.winner
+      ? match.result.replace(`${match.winner} win `, '').trim()
+      : 'No separating the sides';
+    ui.resultCenterScores.textContent = match.innings
+      .map((innings, index) => `${index + 1}${index === 0 ? 'st' : 'nd'} ${innings.teamName} ${innings.runs}/${innings.wickets} (${oversText(innings.balls)})`)
+      .join('  ·  ');
+  }
   ui.formatLabel.textContent = formatDescription(match.overs);
   ui.scorecardFormat.textContent = `${match.home.toUpperCase()} VS ${match.away.toUpperCase()} · ${formatDescription(match.overs)}`;
 
@@ -279,7 +307,12 @@ function updateScoreboard() {
     ui.inningsLabel.innerHTML = `INNINGS ${match.currentInnings + 1}<span>·</span>${batting.teamName.toUpperCase()} BATTING`;
   }
 
-  if (isChasing && !match.finished) {
+  if (match.finished) {
+    ui.targetLabel.textContent = 'THE RESULT';
+    ui.targetValue.textContent = match.result;
+    ui.runRateLabel.textContent = 'THE TOSS';
+    ui.runRateValue.textContent = `${match.tossWinner} won and chose to ${match.tossDecision}`;
+  } else if (isChasing) {
     ui.targetLabel.textContent = 'THE TARGET';
     ui.targetValue.textContent = `${chaseTarget} to win`;
     const needed = Math.max(0, chaseTarget - batting.runs);
@@ -438,6 +471,7 @@ function finishInnings() {
 
   if (isChasing && innings.runs > match.innings[0].runs) {
     const wicketsRemaining = 10 - innings.wickets;
+    match.winner = innings.teamName;
     match.result = `${innings.teamName} win by ${wicketsRemaining} ${wicketsRemaining === 1 ? 'wicket' : 'wickets'}`;
     endMatch();
     return;
@@ -453,10 +487,12 @@ function finishInnings() {
     ui.gameHeading.textContent = 'The chase is on.';
     ui.gameCopy.textContent = `${match.innings[1].teamName} need ${match.innings[0].runs + 1} to take the win.`;
   } else if (innings.runs === match.innings[0].runs) {
+    match.winner = null;
     match.result = 'It’s a tie — what a game';
     endMatch();
   } else {
     const margin = match.innings[0].runs - innings.runs;
+    match.winner = match.innings[0].teamName;
     match.result = `${match.innings[0].teamName} win by ${margin} ${margin === 1 ? 'run' : 'runs'}`;
     endMatch();
   }
@@ -613,17 +649,21 @@ function startMatch(event) {
     return;
   }
   ui.homeTeamSelect.setCustomValidity('');
-  const homeBatsFirst = Math.random() < 0.5;
-  const battingFirst = homeBatsFirst ? home : away;
-  const battingSecond = homeBatsFirst ? away : home;
+  const tossWinner = Math.random() < 0.5 ? home : away;
+  const tossDecision = Math.random() < 0.5 ? 'bat' : 'bowl';
+  const battingFirst = tossDecision === 'bat' ? tossWinner : (tossWinner === home ? away : home);
+  const battingSecond = battingFirst === home ? away : home;
 
   match = {
     home,
     away,
     overs,
+    tossWinner,
+    tossDecision,
     currentInnings: 0,
     innings: [],
     result: null,
+    winner: null,
     finished: false,
     isPlayingOver: false,
     isAutoPlaying: false,
@@ -641,8 +681,8 @@ function startMatch(event) {
   ui.gameHeading.textContent = 'You’re in. Feel the roar.';
   ui.gameCopy.textContent = 'One tap. The toss is in. Settle in for the showdown.';
   ui.matchLabel.textContent = `${home.toUpperCase()} VS ${away.toUpperCase()} · SIMULATION`;
-  const bowlingTeam = homeBatsFirst ? away : home;
-  ui.commentaryText.textContent = `${battingFirst} win the toss and elect to bat. ${bowlingTeam} take the field. The players are ready for the first ball.`;
+  const bowlingTeam = battingFirst === home ? away : home;
+  ui.commentaryText.textContent = `${tossWinner} win the toss and elect to ${tossDecision}. ${battingFirst} will bat first as ${bowlingTeam} take the field. The players are ready for the first ball.`;
   ui.commentaryOver.textContent = 'INNINGS 1 · TOSS RESULT';
   ui.pitchStatus.textContent = `${battingFirst.toUpperCase()} BATTING · ${bowlingTeam.toUpperCase()} FIELDING`;
   ui.scorecardFormat.textContent = `${home.toUpperCase()} VS ${away.toUpperCase()} · ${formatDescription(overs)}`;

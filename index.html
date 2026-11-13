@@ -6,8 +6,8 @@
     <meta name="theme-color" content="#101812">
     <meta name="description" content="Pick two international sides and watch an animated cricket match under the stadium lights.">
     <title>Boundary Live — International Matchday</title>
-    <link rel="stylesheet" href="style.css?v=3">
-    <script src="app.js?v=3" defer></script>
+    <link rel="stylesheet" href="style.css?v=4">
+    <script src="app.js?v=4" defer></script>
   </head>
   <body>
     <header class="topbar">
@@ -43,6 +43,7 @@
 
             <div class="scoreboard-content">
               <div class="innings-label" id="innings-label">INTERNATIONAL SHOWDOWN <span>·</span> UNDER THE LIGHTS</div>
+              <div class="toss-ribbon" id="toss-ribbon"><span>THE TOSS</span><strong id="toss-summary">Toss pending</strong></div>
               <div class="teams-score">
                 <div class="team-block team-home">
                   <div class="team-identity">
@@ -56,6 +57,12 @@
                   <span class="live-score-team" id="live-score-team">READY FOR THE FIRST BALL</span>
                   <strong class="live-score" id="live-score">—</strong>
                   <span class="live-score-overs" id="live-score-overs">5 OVERS PER SIDE</span>
+                  <div class="match-result-center" id="match-result-center" hidden>
+                    <span class="result-center-kicker">FULL TIME · RESULT</span>
+                    <strong id="result-center-winner">MATCH COMPLETE</strong>
+                    <span id="result-center-margin"></span>
+                    <span class="result-center-scores" id="result-center-scores"></span>
+                  </div>
                 </div>
                 <div class="team-block team-away">
                   <div class="team-identity">
@@ -77,6 +84,10 @@
                   <span class="footer-label" id="run-rate-label">RUN RATE</span>
                   <span class="footer-value" id="run-rate-value">0.00 runs per over</span>
                 </div>
+              </div>
+              <div class="first-innings-summary" id="first-innings-summary">
+                <span id="first-innings-label">FIRST INNINGS</span>
+                <strong id="first-innings-score">Waiting for the toss</strong>
               </div>
               <div class="broadcast-figures">
                 <section class="figures-panel" aria-label="Current batting figures">
