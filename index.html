@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101812">
+    <meta name="description" content="Pick two international sides and watch an animated cricket match under the stadium lights.">
+    <title>Boundary Live — International Matchday</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Boundary Live matchday home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="brand-name">BOUNDARY<span>LIVE</span></span>
+      </a>
+      <nav class="top-nav" aria-label="Main navigation">
+        <a class="nav-link nav-link-active" href="#match">THE MATCH</a>
+        <a class="nav-link" href="#scorecard">SCORECARD</a>
+      </nav>
+      <div class="season-label venue-label"><span class="season-dot"></span> LIVE FROM THE STADIUM <span class="season-divider">/</span> MATCH NIGHT</div>
+    </header>
+
+    <main id="match" class="page-shell">
+      <section class="page-intro">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> THE RIVALRY. THE ROAR. THE MOMENT.</p>
+          <h1 id="page-title">India <span>vs</span> Pakistan.</h1>
+          <p class="intro-copy">One stadium. Two teams. Every ball has a story.</p>
+        </div>
+        <div class="match-id"><span class="match-id-icon">✳</span><span id="match-label">THE GRAND SHOWDOWN</span></div>
+      </section>
+
+      <section class="match-layout" aria-label="International cricket match">
+        <div class="main-column">
+          <section class="scoreboard home-india away-pakistan" aria-label="Live scoreboard">
+            <div class="scoreboard-grain" aria-hidden="true"></div>
+            <div class="scoreboard-topline">
+              <span class="live-label" id="live-label"><span class="live-dot"></span> GET YOUR SEAT · MATCH NIGHT</span>
+              <span class="format-label" id="format-label">5-OVER SHOWDOWN</span>
+            </div>
+
+            <div class="scoreboard-content">
+              <div class="innings-label" id="innings-label">INTERNATIONAL SHOWDOWN <span>·</span> UNDER THE LIGHTS</div>
+              <div class="teams-score">
+                <div class="team-block team-home">
+                  <div class="team-identity">
+                    <span class="team-crest crest-home" id="home-crest">🇮🇳</span>
+                    <span class="team-name" id="home-name">INDIA</span>
+                  </div>
+                  <div class="team-total" id="home-score">—<span class="team-wickets"></span></div>
+                  <div class="team-overs" id="home-overs">0.0 OVERS</div>
+                </div>
+                <div class="live-score-center" aria-live="polite">
+                  <span class="live-score-team" id="live-score-team">READY FOR THE FIRST BALL</span>
+                  <strong class="live-score" id="live-score">—</strong>
+                  <span class="live-score-overs" id="live-score-overs">5 OVERS PER SIDE</span>
+                </div>
+                <div class="team-block team-away">
+                  <div class="team-identity">
+                    <span class="team-crest crest-away" id="away-crest">🇵🇰</span>
+                    <span class="team-name" id="away-name">PAKISTAN</span>
+                  </div>
+                  <div class="team-total" id="away-score">—<span class="team-wickets"></span></div>
+                  <div class="team-overs" id="away-overs">0.0 OVERS</div>
+                </div>
+              </div>
+
+              <div class="score-divider"></div>
+              <div class="scoreboard-footer">
+                <div class="target-block">
+                  <span class="footer-label" id="target-label">THE SHOWDOWN</span>
+                  <span class="footer-value" id="target-value">One stadium. Two nations.</span>
+                </div>
+                <div class="run-rate-block">
+                  <span class="footer-label" id="run-rate-label">MATCH FORMAT</span>
+                  <span class="footer-value" id="run-rate-value">Five overs. Every ball matters.</span>
+                </div>
+              </div>
+            </div>
+            <div class="scoreboard-bottom-edge" aria-hidden="true"><span></span><span></span><span></span></div>
+          </section>
+
+          <section class="pitch-card" aria-label="Live cricket pitch">
+            <div class="pitch-heading">
+              <div>
+                <p class="eyebrow"><span class="eyebrow-line"></span> THE CROWD IS ON ITS FEET</p>
+                <h2>Feel every ball.</h2>
+              </div>
+              <div class="pitch-live" id="pitch-live"><span class="live-dot"></span><span id="pitch-status">READY FOR THE FIRST BALL</span></div>
+            </div>
+            <div class="pitch-scene-wrap">
+              <svg class="pitch-scene batting-india fielding-pakistan" id="pitch-scene" viewBox="0 0 690 280" role="img" aria-labelledby="pitch-title pitch-description">
+                <title id="pitch-title">India versus Pakistan under the stadium lights</title>
+                <desc id="pitch-description">A packed international night crowd waves team flags as the bowler runs in, the batter swings, and the fielders chase the ball.</desc>
+                <defs>
+                  <linearGradient id="sky-gradient" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0" stop-color="#07111a"/>
+                    <stop offset=".55" stop-color="#142d37"/>
+                    <stop offset="1" stop-color="#48654d"/>
+                  </linearGradient>
+                  <linearGradient id="grass-gradient" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0" stop-color="#6c945e"/>
+                    <stop offset="1" stop-color="#315d3d"/>
+                  </linearGradient>
+                  <linearGradient id="pitch-gradient" x1="0" x2="1">
+                    <stop offset="0" stop-color="#bd9b6c"/>
+                    <stop offset=".5" stop-color="#d7bb8d"/>
+                    <stop offset="1" stop-color="#b99565"/>
+                  </linearGradient>
+                  <radialGradient id="stadium-glow">
+                    <stop offset="0" stop-color="#f8eab9" stop-opacity=".3"/>
+                    <stop offset="1" stop-color="#f8eab9" stop-opacity="0"/>
+                  </radialGradient>
+                  <pattern id="crowd-pattern" width="13" height="12" patternUnits="userSpaceOnUse">
+                    <circle cx="3" cy="3" r="1.7" fill="#f3ead0" opacity=".9"/>
+                    <circle cx="9" cy="7" r="1.8" fill="#e1a36f" opacity=".85"/>
+                    <circle cx="12" cy="1" r="1.5" fill="#b9c9e8" opacity=".82"/>
+                    <circle cx="2" cy="10" r="1.4" fill="#d7dfca" opacity=".8"/>
+                  </pattern>
+                  <clipPath id="ground-clip">
+                    <ellipse cx="345" cy="158" rx="322" ry="144"/>
+                  </clipPath>
+                </defs>
+                <rect width="690" height="280" rx="5" fill="url(#sky-gradient)"/>
+                <ellipse cx="70" cy="125" rx="190" ry="155" fill="url(#stadium-glow)"/>
+                <ellipse cx="620" cy="125" rx="190" ry="155" fill="url(#stadium-glow)"/>
+                <g class="crowd-stands">
+                  <path d="M13 68 Q345 -68 677 68 L677 154 Q345 67 13 154Z" fill="#12212a"/>
+                  <path d="M13 68 Q345 -68 677 68 L677 154 Q345 67 13 154Z" fill="url(#crowd-pattern)"/>
+                  <path d="M17 81 Q345 -42 673 81" fill="none" stroke="#f1db9d" stroke-opacity=".35" stroke-width="5"/>
+                  <path d="M25 108 Q345 4 665 108M38 135Q345 42 652 135" fill="none" stroke="#e9e3c9" stroke-opacity=".2" stroke-width="2"/>
+                </g>
+                <ellipse class="stadium-light" cx="70" cy="125" rx="190" ry="155" fill="url(#stadium-glow)"/>
+                <ellipse class="stadium-light" cx="620" cy="125" rx="190" ry="155" fill="url(#stadium-glow)"/>
+                <g fill="#fff4d5" opacity=".95">
+                  <path d="M40 43h4v40h-4zm-10 0h26v5H30z"/>
+                  <path d="M646 43h4v40h-4zm-10 0h26v5h-26z"/>
+                </g>
+                <path d="M15 88L41 49M60 89L41 49M650 49l-25 40m51 0-26-40" stroke="#e5d59f" stroke-opacity=".22" stroke-width="25"/>
+                <g class="crowd-flags" aria-hidden="true">
+                  <g transform="translate(104 92)">
+                    <g class="fan-flag fan-flag-india">
+                      <path d="M0 0v34" stroke="#eee3c5" stroke-width="2"/>
+                      <text id="home-crowd-flag" x="0" y="23" font-size="25">🇮🇳</text>
+                    </g>
+                  </g>
+                  <g transform="translate(558 92)">
+                    <g class="fan-flag fan-flag-pakistan">
+                      <path d="M0 0v34" stroke="#eee3c5" stroke-width="2"/>
+                      <text id="away-crowd-flag" x="0" y="23" font-size="25">🇵🇰</text>
+                    </g>
+                  </g>
+                </g>
+                <ellipse cx="345" cy="158" rx="322" ry="144" fill="url(#grass-gradient)"/>
+                <g clip-path="url(#ground-clip)" fill="none">
+                  <ellipse cx="345" cy="158" rx="288" ry="122" stroke="#b5ca8a" stroke-opacity=".12" stroke-width="19"/>
+                  <ellipse cx="345" cy="158" rx="240" ry="99" stroke="#234a35" stroke-opacity=".18" stroke-width="21"/>
+                  <ellipse cx="345" cy="158" rx="190" ry="77" stroke="#c1d193" stroke-opacity=".1" stroke-width="18"/>
+                  <path d="M23 154H667M58 123H632M70 196H620" stroke="#d7dfb3" stroke-opacity=".08"/>
+                </g>
+                <ellipse cx="345" cy="158" rx="321" ry="143" fill="none" stroke="#dbe4c4" stroke-opacity=".78" stroke-width="2"/>
+                <ellipse cx="345" cy="158" rx="313" ry="135" fill="none" stroke="#193e2f" stroke-opacity=".28"/>
+                <ellipse cx="347" cy="162" rx="75" ry="28" fill="#1e482f" opacity=".24"/>
+                <path d="M295 114L389 114L403 194L281 194Z" fill="url(#pitch-gradient)"/>
+                <path d="M302 119L383 119L394 188L291 188Z" fill="#efdbb4" opacity=".23"/>
+                <path d="M295 123L389 123M284 187L401 187" stroke="#fff5df" stroke-width="2" opacity=".88"/>
+                <path d="M299 131H387M291 179H395" stroke="#775d3c" stroke-opacity=".45" stroke-width="1"/>
+                <path d="M318 123v66m48-66v66" stroke="#8c704a" stroke-opacity=".14" stroke-width="1"/>
+                <ellipse cx="299" cy="185" rx="19" ry="5" fill="#213c2b" opacity=".32"/>
+                <ellipse cx="390" cy="185" rx="19" ry="5" fill="#213c2b" opacity=".32"/>
+                <g id="stumps-batter" stroke="#f1ead4" stroke-width="3" stroke-linecap="round">
+                  <path d="M296 175v-16m5 16v-18m5 18v-16"/>
+                </g>
+                <g id="stumps-bowler" stroke="#f1ead4" stroke-width="3" stroke-linecap="round">
+                  <path d="M385 132v-15m5 15v-17m5 17v-15"/>
+                </g>
+                <g class="fielder" transform="translate(355 93)">
+                  <circle cy="-13" r="5.5" fill="#c9875f"/><path d="M-6-17Q0-22 6-17L7-14H-7Z" fill="#102d21"/><path d="M-8-5Q0-10 8-5L9 9H-9Z" fill="#d9e5c4"/><path d="M-6 8L-8 17m11-9 5 9" stroke="#f0ead4" stroke-width="2.5" stroke-linecap="round"/><path d="M-8-2l-5 7m21-7 5 7" stroke="#c9875f" stroke-width="2.5" stroke-linecap="round"/>
+                </g>
+                <g class="fielder" transform="translate(442 116)">
+                  <circle cy="-13" r="5.5" fill="#c9875f"/><path d="M-6-17Q0-22 6-17L7-14H-7Z" fill="#102d21"/><path d="M-8-5Q0-10 8-5L9 9H-9Z" fill="#d9e5c4"/><path d="M-6 8L-8 17m11-9 5 9" stroke="#f0ead4" stroke-width="2.5" stroke-linecap="round"/><path d="M-8-2l-5 7m21-7 5 7" stroke="#c9875f" stroke-width="2.5" stroke-linecap="round"/>
+                </g>
+                <g class="fielder" transform="translate(455 181)">
+                  <circle cy="-13" r="5.5" fill="#c9875f"/><path d="M-6-17Q0-22 6-17L7-14H-7Z" fill="#102d21"/><path d="M-8-5Q0-10 8-5L9 9H-9Z" fill="#d9e5c4"/><path d="M-6 8L-8 17m11-9 5 9" stroke="#f0ead4" stroke-width="2.5" stroke-linecap="round"/><path d="M-8-2l-5 7m21-7 5 7" stroke="#c9875f" stroke-width="2.5" stroke-linecap="round"/>
+                </g>
+                <g class="fielder" transform="translate(349 222)">
+                  <circle cy="-13" r="5.5" fill="#c9875f"/><path d="M-6-17Q0-22 6-17L7-14H-7Z" fill="#102d21"/><path d="M-8-5Q0-10 8-5L9 9H-9Z" fill="#d9e5c4"/><path d="M-6 8L-8 17m11-9 5 9" stroke="#f0ead4" stroke-width="2.5" stroke-linecap="round"/><path d="M-8-2l-5 7m21-7 5 7" stroke="#c9875f" stroke-width="2.5" stroke-linecap="round"/>
+                </g>
+                <g class="fielder" transform="translate(241 117)">
+                  <circle cy="-13" r="5.5" fill="#c9875f"/><path d="M-6-17Q0-22 6-17L7-14H-7Z" fill="#102d21"/><path d="M-8-5Q0-10 8-5L9 9H-9Z" fill="#d9e5c4"/><path d="M-6 8L-8 17m11-9 5 9" stroke="#f0ead4" stroke-width="2.5" stroke-linecap="round"/><path d="M-8-2l-5 7m21-7 5 7" stroke="#c9875f" stroke-width="2.5" stroke-linecap="round"/>
+                </g>
+                <g class="fielder" transform="translate(202 169)">
+                  <circle cy="-13" r="5.5" fill="#c9875f"/><path d="M-6-17Q0-22 6-17L7-14H-7Z" fill="#102d21"/><path d="M-8-5Q0-10 8-5L9 9H-9Z" fill="#d9e5c4"/><path d="M-6 8L-8 17m11-9 5 9" stroke="#f0ead4" stroke-width="2.5" stroke-linecap="round"/><path d="M-8-2l-5 7m21-7 5 7" stroke="#c9875f" stroke-width="2.5" stroke-linecap="round"/>
+                </g>
+                <g class="fielder" transform="translate(490 150)">
+                  <circle cy="-13" r="5.5" fill="#c9875f"/><path d="M-6-17Q0-22 6-17L7-14H-7Z" fill="#102d21"/><path d="M-8-5Q0-10 8-5L9 9H-9Z" fill="#d9e5c4"/><path d="M-6 8L-8 17m11-9 5 9" stroke="#f0ead4" stroke-width="2.5" stroke-linecap="round"/><path d="M-8-2l-5 7m21-7 5 7" stroke="#c9875f" stroke-width="2.5" stroke-linecap="round"/>
+                </g>
+                <g id="bowler">
+                  <ellipse cx="417" cy="168" rx="15" ry="5" fill="#1f472f" opacity=".36"/>
+                  <circle cx="414" cy="130" r="7" fill="#c9875f"/>
+                  <path d="M406 139Q414 135 422 140L425 158L403 157Z" class="player-jersey-field"/>
+                  <path d="M408 156L401 169m18-12 9 12" stroke="#f0ead4" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M409 141L397 128" class="bowler-arm" fill="none" stroke="#c9875f" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M420 141L430 127" class="bowler-arm-delivery" fill="none" stroke="#c9875f" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M406 139Q414 135 422 140L425 158L403 157Z" fill="#f5f0d7" opacity=".16"/>
+                  <path d="M411 140v18" stroke="#fff" stroke-opacity=".65" stroke-width="1.5"/>
+                  <path d="M409 125Q414 119 420 125L421 128H408Z" fill="#e9f1e7"/>
+                </g>
+                <g id="batter">
+                  <ellipse cx="277" cy="175" rx="16" ry="5" fill="#1f472f" opacity=".36"/>
+                  <circle cx="278" cy="137" r="7" fill="#b87853"/>
+                  <path d="M270 146Q278 142 286 147L288 161L268 161Z" class="player-jersey-batter"/>
+                  <path d="M272 160L266 171m16-11 5 11" stroke="#f0ead4" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M271 149L263 158" fill="none" stroke="#b87853" stroke-width="3" stroke-linecap="round"/>
+                  <g class="bat-arm"><path d="M285 149L295 157" fill="none" stroke="#b87853" stroke-width="3" stroke-linecap="round"/><path d="M294 158L303 136" fill="none" stroke="#b89059" stroke-width="4" stroke-linecap="round"/><path d="M303 136l5-19 7 2-9 20z" fill="#d8bd8b" stroke="#ecdcb8" stroke-width="1"/></g>
+                  <path d="M271 131Q278 123 285 132L286 135H271Z" fill="#e9f1e7"/>
+                  <path d="M272 145h12" stroke="#fff" stroke-opacity=".74" stroke-width="1.4"/>
+                </g>
+                <g id="non-striker">
+                  <ellipse cx="393" cy="169" rx="12" ry="4" fill="#1f472f" opacity=".36"/>
+                  <circle cx="393" cy="139" r="5.5" fill="#b87853"/>
+                  <path d="M387 147Q393 144 399 147L401 159H385Z" class="player-jersey-batter"/>
+                  <path d="M388 158L386 166m10-8 3 8" stroke="#f0ead4" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M387 150L382 157m12-7 5 7" fill="none" stroke="#b87853" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M388 134Q393 128 398 134L399 137H387Z" fill="#e9f1e7"/>
+                </g>
+                <path id="ball-path" d="M406 143Q352 83 302 151" fill="none" stroke="#f4e3a8" stroke-width="1.4" stroke-dasharray="4 5" opacity=".6"/>
+                <circle id="match-ball" r="4" fill="#f2d578" stroke="#fff7d9" stroke-width="1">
+                  <animateMotion id="ball-flight" dur=".62s" begin="indefinite" fill="freeze" path="M 406 143 Q 352 83 302 151"/>
+                </circle>
+                <g id="pitch-announcement" opacity="0">
+                  <rect x="512" y="214" width="145" height="33" rx="3" fill="#f4f3e8"/>
+                  <text id="pitch-announcement-text" x="584" y="235" text-anchor="middle" fill="#254631" font-size="12" font-family="sans-serif" font-weight="700" letter-spacing="1">PLAY</text>
+                </g>
+              </svg>
+            </div>
+            <div class="pitch-player-strip">
+              <div class="pitch-player">
+                <span class="player-symbol batter-symbol" aria-hidden="true">B</span>
+                <span class="player-label">INDIA · ON STRIKE</span>
+                <strong id="pitch-batter-name">Waiting for kickoff</strong>
+              </div>
+              <div class="pitch-player pitch-partner">
+                <span class="player-symbol partner-symbol" aria-hidden="true">•</span>
+                <span class="player-label">INDIA · NON-STRIKER</span>
+                <strong id="pitch-partner-name">The batter’s partner</strong>
+              </div>
+              <div class="pitch-player pitch-bowler">
+                <span class="player-symbol bowler-symbol" aria-hidden="true">↗</span>
+                <span class="player-label">PAKISTAN · WITH THE BALL</span>
+                <strong id="pitch-bowler-name">Ready to bowl</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="stats-grid" aria-label="Match statistics">
+            <article class="stat-card">
+              <span class="stat-icon boundary-icon" aria-hidden="true">↗</span>
+              <span class="stat-label">BOUNDARIES</span>
+              <span class="stat-value" id="boundary-stat">0 <small>× 4</small> &nbsp; 0 <small>× 6</small></span>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon wicket-icon" aria-hidden="true">▥</span>
+              <span class="stat-label">WICKETS</span>
+              <span class="stat-value" id="wicket-stat">0 <small>down</small></span>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon rate-icon" aria-hidden="true">↗</span>
+              <span class="stat-label">RUN RATE</span>
+              <span class="stat-value" id="rate-stat">— <small>rpo</small></span>
+            </article>
+          </section>
+
+          <section class="recent-card" aria-labelledby="recent-heading">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow"><span class="eyebrow-line"></span> OVER BY OVER</p>
+                <h2 id="recent-heading">The latest.</h2>
+              </div>
+              <span class="delivery-count" id="delivery-count">NO BALLS YET</span>
+            </div>
+            <div class="recent-content" id="recent-content">
+              <span class="empty-ball" aria-hidden="true">·</span>
+              <p>Your first delivery is just a tap away.</p>
+            </div>
+          </section>
+        </div>
+
+        <aside class="side-column">
+          <section class="action-card" id="action-card">
+            <div class="card-heading">
+              <span class="card-kicker" id="action-kicker">GET THINGS ROLLING</span>
+              <span class="card-heading-icon" aria-hidden="true">✳</span>
+            </div>
+            <div id="setup-view">
+              <h2 id="setup-heading">India vs Pakistan.</h2>
+              <p class="card-copy">The lights are on. The stands are full. You’re courtside for every ball.</p>
+              <form id="match-form">
+                <div class="team-picker">
+                  <label class="team-picker-side" for="home-team">
+                    <span class="team-picker-label">HOME TEAM</span>
+                    <span class="team-picker-control">
+                      <span class="team-picker-flag" id="home-team-flag" aria-hidden="true">🇮🇳</span>
+                      <select id="home-team" name="home" aria-label="Choose the home team">
+                        <option value="India" selected>India</option>
+                        <option value="Pakistan">Pakistan</option>
+                        <option value="Australia">Australia</option>
+                        <option value="England">England</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="New Zealand">New Zealand</option>
+                        <option value="Sri Lanka">Sri Lanka</option>
+                        <option value="Bangladesh">Bangladesh</option>
+                      </select>
+                    </span>
+                  </label>
+                  <span class="fixture-versus" aria-hidden="true">VS</span>
+                  <label class="team-picker-side" for="away-team">
+                    <span class="team-picker-label">AWAY TEAM</span>
+                    <span class="team-picker-control">
+                      <span class="team-picker-flag" id="away-team-flag" aria-hidden="true">🇵🇰</span>
+                      <select id="away-team" name="away" aria-label="Choose the away team">
+                        <option value="Pakistan" selected>Pakistan</option>
+                        <option value="India">India</option>
+                        <option value="Australia">Australia</option>
+                        <option value="England">England</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="New Zealand">New Zealand</option>
+                        <option value="Sri Lanka">Sri Lanka</option>
+                        <option value="Bangladesh">Bangladesh</option>
+                      </select>
+                    </span>
+                  </label>
+                </div>
+                <span class="fixed-format-label"><span class="live-dot"></span> <span id="format-preview">5-OVER INTERNATIONAL SHOWDOWN</span></span>
+                <fieldset class="overs-field">
+                  <legend class="field-label">OVERS PER INNINGS</legend>
+                  <div class="overs-options">
+                    <label class="overs-option"><input type="radio" name="overs" value="5" checked><span>5 OVERS</span></label>
+                    <label class="overs-option"><input type="radio" name="overs" value="10"><span>10 OVERS</span></label>
+                    <label class="overs-option"><input type="radio" name="overs" value="20"><span>20 OVERS</span></label>
+                    <label class="overs-option"><input type="radio" name="overs" value="50"><span>50 OVERS</span></label>
+                  </div>
+                  <span class="overs-hint">Same number of overs for both innings.</span>
+                </fieldset>
+                <fieldset class="pace-field setup-pace-field">
+                  <legend class="field-label">CHOOSE YOUR VIEWING PACE</legend>
+                  <div class="pace-options">
+                    <label class="pace-option"><input type="radio" name="setup-pace" value="ball" checked><span>EVERY BALL · FULL DRAMA</span></label>
+                    <label class="pace-option"><input type="radio" name="setup-pace" value="over"><span>OVER HIGHLIGHTS · QUICK</span></label>
+                  </div>
+                </fieldset>
+                <button class="primary-button" type="submit">WATCH THE MATCH <span aria-hidden="true">▶</span></button>
+              </form>
+            </div>
+
+            <div id="game-view" hidden>
+              <h2 id="game-heading">You’re up.</h2>
+              <p class="card-copy" id="game-copy">Choose a pace, press play once, and let the match unfold.</p>
+              <div class="next-ball-panel">
+                <div class="next-ball-top"><span class="live-dot"></span><span id="batting-label">AT THE CREASE</span></div>
+                <div class="next-ball-teams"><span class="mini-team" id="mini-batting-crest">🇮🇳</span><span id="batting-team-name">India</span></div>
+                <p id="bowling-line">Pakistan have the ball.</p>
+                <div class="mini-scoreline"><span>THIS INNINGS</span><strong id="mini-score">0/0</strong><span id="mini-overs">0.0 overs</span></div>
+              </div>
+                <fieldset class="pace-field">
+                  <legend class="field-label">VIEWING PACE</legend>
+                  <div class="pace-options">
+                    <label class="pace-option"><input type="radio" name="game-pace" value="ball"><span>BALL BY BALL</span></label>
+                    <label class="pace-option"><input type="radio" name="game-pace" value="over" checked><span>OVER BY OVER</span></label>
+                  </div>
+                  <p class="pace-hint">Choose a delivery-by-delivery view or watch a quick over at a time.</p>
+                </fieldset>
+                <div class="game-actions">
+                  <button class="primary-button" id="autoplay-button" type="button" aria-pressed="false">AUTO-PLAY MATCH <span aria-hidden="true">▶</span></button>
+                  <div class="quick-actions">
+                    <button class="secondary-button" id="bowl-button" type="button">BOWL NEXT BALL <span aria-hidden="true">↗</span></button>
+                    <button class="secondary-button" id="over-button" type="button">PLAY AN OVER <span aria-hidden="true">→</span></button>
+                  </div>
+                </div>
+              <button class="text-button" id="new-match-button" type="button">↺ &nbsp; Start a new match</button>
+              <p class="game-hint">Live action on the field. Pause whenever you like.</p>
+            </div>
+
+            <div id="result-view" hidden>
+              <h2 id="result-heading">That’s a wrap.</h2>
+              <p class="card-copy" id="result-copy"></p>
+              <div class="result-stamp"><span class="result-star">✳</span><span>THAT’S<br>CRICKET</span></div>
+              <button class="primary-button" id="rematch-button" type="button">ANOTHER ROUND? <span aria-hidden="true">↗</span></button>
+            </div>
+          </section>
+
+          <section class="commentary-card" aria-label="Ball-by-ball commentary">
+            <div class="commentary-heading">
+              <span class="commentary-live"><span class="live-dot"></span> THE CROWD’S ROARING</span>
+              <span class="commentary-decoration" aria-hidden="true">✳</span>
+            </div>
+            <p class="commentary-text" id="commentary-text">The floodlights are on. India vs Pakistan. The whole ground is holding its breath.</p>
+            <span class="commentary-over" id="commentary-over">MATCH NIGHT · YOUR SEAT IS WAITING</span>
+          </section>
+
+          <div class="side-note"><span class="side-note-mark">✳</span><span>SIMULATED PLAYERS.<br>BIG-MATCH ENERGY.</span></div>
+        </aside>
+      </section>
+
+      <section class="scorecard-card" id="scorecard" aria-labelledby="scorecard-heading">
+        <div class="scorecard-heading">
+          <div>
+            <p class="eyebrow"><span class="eyebrow-line"></span> THE FULL STORY</p>
+            <h2 id="scorecard-heading">The scorecard.</h2>
+          </div>
+          <span class="scorecard-format" id="scorecard-format">INDIA VS PAKISTAN · 5 OVER SHOWDOWN</span>
+        </div>
+        <div class="scorecard-columns">
+          <article class="innings-card">
+            <div class="innings-card-heading"><span class="innings-number">01</span><div><h3 id="innings-one-name">India</h3><span id="innings-one-detail">Waiting for the first ball</span></div></div>
+            <div class="innings-card-score" id="innings-one-score">— <span> / —</span></div>
+            <div class="innings-progress"><span id="innings-one-progress"></span></div>
+            <p class="innings-footnote" id="innings-one-note">Set up a match to get started.</p>
+          </article>
+          <article class="innings-card">
+            <div class="innings-card-heading"><span class="innings-number">02</span><div><h3 id="innings-two-name">Pakistan</h3><span id="innings-two-detail">The chase</span></div></div>
+            <div class="innings-card-score" id="innings-two-score">— <span> / —</span></div>
+            <div class="innings-progress"><span id="innings-two-progress"></span></div>
+            <p class="innings-footnote" id="innings-two-note">One innings at a time.</p>
+          </article>
+        </div>
+      </section>
+
+      <footer class="page-footer"><a class="brand footer-brand" href="#match"><span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span><span class="brand-name">BOUNDARY<span>LIVE</span></span></a><span>SIMULATED MATCH · FICTIONAL PLAYER LINEUPS.</span><span class="footer-ball" aria-hidden="true">●</span></footer>
+    </main>
+  </body>
+</html>
