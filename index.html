@@ -6,8 +6,8 @@
     <meta name="theme-color" content="#101812">
     <meta name="description" content="Pick two international sides and watch an animated cricket match under the stadium lights.">
     <title>Boundary Live — International Matchday</title>
-    <link rel="stylesheet" href="style.css?v=4">
-    <script src="app.js?v=4" defer></script>
+    <link rel="stylesheet" href="style.css?v=5">
+    <script src="app.js?v=5" defer></script>
   </head>
   <body>
     <header class="topbar">
@@ -452,12 +452,48 @@
             <div class="innings-card-score" id="innings-one-score">— <span> / —</span></div>
             <div class="innings-progress"><span id="innings-one-progress"></span></div>
             <p class="innings-footnote" id="innings-one-note">Set up a match to get started.</p>
+            <section class="innings-score-detail" aria-label="First innings batting scorecard">
+              <h4>Batting</h4>
+              <div class="scorecard-table-wrap">
+                <table class="scorecard-table" aria-label="First innings batting figures">
+                  <thead><tr><th scope="col">Batter</th><th scope="col">Status</th><th scope="col">R</th><th scope="col">B</th><th scope="col">4s</th><th scope="col">6s</th><th scope="col">SR</th></tr></thead>
+                  <tbody id="innings-one-batting"><tr><td colspan="7">Set up a match to see batting figures.</td></tr></tbody>
+                </table>
+              </div>
+            </section>
+            <section class="innings-score-detail" aria-label="First innings bowling scorecard">
+              <h4>Bowling</h4>
+              <div class="scorecard-table-wrap">
+                <table class="scorecard-table" aria-label="First innings bowling figures">
+                  <thead><tr><th scope="col">Bowler</th><th scope="col">O</th><th scope="col">M</th><th scope="col">R</th><th scope="col">W</th><th scope="col">Econ</th></tr></thead>
+                  <tbody id="innings-one-bowling"><tr><td colspan="6">Bowling figures will appear here.</td></tr></tbody>
+                </table>
+              </div>
+            </section>
           </article>
           <article class="innings-card">
             <div class="innings-card-heading"><span class="innings-number">02</span><div><h3 id="innings-two-name">Pakistan</h3><span id="innings-two-detail">The chase</span></div></div>
-            <div class="innings-card-score" id="innings-two-score">— <span> / —</span></div>
+            <div class="innings-card-score" id="innings-two-score">— <span>/ —</span></div>
             <div class="innings-progress"><span id="innings-two-progress"></span></div>
             <p class="innings-footnote" id="innings-two-note">One innings at a time.</p>
+            <section class="innings-score-detail" aria-label="Second innings batting scorecard">
+              <h4>Batting</h4>
+              <div class="scorecard-table-wrap">
+                <table class="scorecard-table" aria-label="Second innings batting figures">
+                  <thead><tr><th scope="col">Batter</th><th scope="col">Status</th><th scope="col">R</th><th scope="col">B</th><th scope="col">4s</th><th scope="col">6s</th><th scope="col">SR</th></tr></thead>
+                  <tbody id="innings-two-batting"><tr><td colspan="7">Set up a match to see batting figures.</td></tr></tbody>
+                </table>
+              </div>
+            </section>
+            <section class="innings-score-detail" aria-label="Second innings bowling scorecard">
+              <h4>Bowling</h4>
+              <div class="scorecard-table-wrap">
+                <table class="scorecard-table" aria-label="Second innings bowling figures">
+                  <thead><tr><th scope="col">Bowler</th><th scope="col">O</th><th scope="col">M</th><th scope="col">R</th><th scope="col">W</th><th scope="col">Econ</th></tr></thead>
+                  <tbody id="innings-two-bowling"><tr><td colspan="6">Bowling figures will appear here.</td></tr></tbody>
+                </table>
+              </div>
+            </section>
           </article>
         </div>
       </section>

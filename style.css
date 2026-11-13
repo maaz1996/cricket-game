@@ -273,6 +273,19 @@ h1, h2, h3, p { margin-top: 0; }
 .innings-progress { height: 3px; overflow: hidden; margin-top: 9px; border-radius: 2px; background: #e9ece3; }
 .innings-progress > span { width: 0; height: 100%; display: block; border-radius: inherit; background: #829e69; transition: width .3s ease; }
 .innings-footnote { margin: 9px 0 0; color: #91968c; font-size: 9px; }
+.innings-score-detail { min-width: 0; margin-top: 20px; }
+.innings-score-detail h4 { margin: 0 0 8px; color: #e8bd7d; font-family: var(--mono); font-size: 9px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; }
+.scorecard-table-wrap { width: 100%; overflow-x: auto; border: 1px solid #ffffff16; border-radius: 5px; }
+.scorecard-table { width: 100%; min-width: 420px; border-collapse: collapse; color: #e3e9dc; font-family: var(--mono); font-size: 10px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.scorecard-table th, .scorecard-table td { padding: 8px 7px; text-align: right; }
+.scorecard-table thead { background: #ffffff08; }
+.scorecard-table thead th { color: #aab8a6; font-size: 8px; font-weight: 700; }
+.scorecard-table th:first-child { padding-left: 10px; text-align: left; }
+.scorecard-table tbody th { color: #f0f3e8; font-family: var(--sans); font-size: 10px; font-weight: 700; }
+.scorecard-table tbody td { color: #d3ddce; }
+.scorecard-table tbody td:nth-child(2) { color: #bac6b6; font-family: var(--sans); font-size: 9px; }
+.scorecard-table tbody tr + tr { border-top: 1px solid #ffffff12; }
+.scorecard-table tbody td[colspan] { padding: 12px 10px; color: #aebdae; text-align: left; }
 .page-footer { min-height: 74px; display: flex; align-items: center; justify-content: space-between; margin-top: 15px; }
 .footer-brand .brand-mark { width: 25px; height: 25px; }
 .footer-brand .brand-mark span { height: 11px; top: 6px; }
@@ -476,6 +489,7 @@ body {
 @media (max-width: 760px) {
   .match-layout { grid-template-columns: minmax(0, 1fr) minmax(255px, .82fr); }
   .pitch-scene-wrap { padding: 0 5px; }
+  .scorecard-columns { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 600px) {
@@ -798,13 +812,13 @@ button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible
 .over-mark { font-weight: 700; }
 
 @media (max-width: 700px) {
-  .broadcast-figures { grid-template-columns: 1fr;     .toss-ribbon { align-items: flex-start; font-size: 8px; }
-    .first-innings-summary { align-items: flex-start; flex-direction: column; gap: 5px; }
-    .first-innings-summary strong { text-align: left; }
-    .scoreboard.match-finished .live-score-center { min-height: 166px; padding: 14px 10px; }
-    .match-result-center > strong { font-size: clamp(22px, 6vw, 30px); }
-    .match-result-center .result-center-scores { font-size: 9px; }
-  }
+  .broadcast-figures { grid-template-columns: 1fr; }
+  .toss-ribbon { align-items: flex-start; font-size: 8px; }
+  .first-innings-summary { align-items: flex-start; flex-direction: column; gap: 5px; }
+  .first-innings-summary strong { text-align: left; }
+  .scoreboard.match-finished .live-score-center { min-height: 166px; padding: 14px 10px; }
+  .match-result-center > strong { font-size: clamp(22px, 6vw, 30px); }
+  .match-result-center .result-center-scores { font-size: 9px; }
   .figures-table { font-size: 11px; }
   .figures-table th, .figures-table td { padding: 9px 7px; }
 }

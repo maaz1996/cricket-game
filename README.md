@@ -9,7 +9,9 @@ ball-by-ball commentary. Twenty overs use a T20-style format, 50 overs a
 one-day-style format, and other lengths are marked as custom. Choose
 ball-by-ball or quicker over-by-over viewing, pause or take control any time.
 The scoreboard keeps the toss decision and first-innings total in view, then
-highlights the final result and both innings' scores at full time.
+highlights the final result and both innings' scores at full time. The
+scorecard tracks each innings' batting status, runs, balls, boundaries, strike
+rate, and bowling overs, maidens, runs, wickets, and economy as the match plays.
 The illustrated players and lineups are fictional; this is a match simulation,
 not a live broadcast.
 

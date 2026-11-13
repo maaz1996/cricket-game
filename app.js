@@ -80,11 +80,15 @@ const scorecard = {
   firstScore: document.querySelector('#innings-one-score'),
   firstProgress: document.querySelector('#innings-one-progress'),
   firstNote: document.querySelector('#innings-one-note'),
+  firstBatting: document.querySelector('#innings-one-batting'),
+  firstBowling: document.querySelector('#innings-one-bowling'),
   secondName: document.querySelector('#innings-two-name'),
   secondDetail: document.querySelector('#innings-two-detail'),
   secondScore: document.querySelector('#innings-two-score'),
   secondProgress: document.querySelector('#innings-two-progress'),
   secondNote: document.querySelector('#innings-two-note'),
+  secondBatting: document.querySelector('#innings-two-batting'),
+  secondBowling: document.querySelector('#innings-two-bowling'),
 };
 
 const figures = {
@@ -134,7 +138,7 @@ let animationTimer = null;
 
 function createInnings(teamName, battingLineup) {
   const battingFigures = Object.fromEntries(
-    battingLineup.map((name) => [name, { runs: 0, balls: 0, fours: 0, sixes: 0 }]),
+    battingLineup.map((name) => [name, { runs: 0, balls: 0, fours: 0, sixes: 0, dismissed: false }]),
   );
   const bowlingFigures = Object.fromEntries(
     battingLineup.map((name) => [name, { balls: 0, maidens: 0, runs: 0, wickets: 0, overRuns: 0 }]),
@@ -407,9 +411,7 @@ function updateScorecard(first, second, totalOvers) {
     ? `${first.runs} <span>/ ${first.wickets}</span>`
     : `${first.runs} <span>/ ${first.wickets}</span>`;
   scorecard.firstProgress.style.width = `${Math.min(100, (first.balls / totalOvers) * 100)}%`;
-  scorecard.firstNote.textContent = firstIsDone
-    ? `${first.fours} fours · ${first.sixes} sixes · ${runRate(first)} runs per over`
-    : `${oversText(first.balls)} of ${match.overs} overs bowled`;
+  scorecard.firstNote.textContent = `${first.fours} fours · ${first.sixes} sixes · RR ${runRate(first)}${firstIsDone ? '' : ` · ${oversText(first.balls)} of ${match.overs} overs`}`;
 
   scorecard.secondName.textContent = second.teamName;
   scorecard.secondDetail.textContent = match.finished
@@ -420,8 +422,64 @@ function updateScorecard(first, second, totalOvers) {
     : '— <span>/ —</span>';
   scorecard.secondProgress.style.width = secondHasStarted ? `${Math.min(100, (second.balls / totalOvers) * 100)}%` : '0%';
   scorecard.secondNote.textContent = secondHasStarted
-    ? `${second.fours} fours · ${second.sixes} sixes · ${runRate(second)} runs per over`
+    ? `${second.fours} fours · ${second.sixes} sixes · RR ${runRate(second)}`
     : 'One innings at a time.';
+
+  renderInningsFigures(first, scorecard.firstBatting, scorecard.firstBowling);
+  renderInningsFigures(second, scorecard.secondBatting, scorecard.secondBowling);
+}
+
+function renderInningsFigures(innings, battingBody, bowlingBody) {
+  const battingRows = innings.battingLineup.map((player) => {
+    const stats = innings.battingFigures[player];
+    const active = player === innings.batter || player === innings.partner;
+    const status = stats.dismissed ? 'Out' : stats.balls || active ? 'Not out' : 'Did not bat';
+    const row = document.createElement('tr');
+    const playerCell = document.createElement('th');
+    playerCell.scope = 'row';
+    playerCell.textContent = player;
+    row.append(playerCell);
+    appendScorecardCell(row, status);
+    appendScorecardCell(row, stats.runs);
+    appendScorecardCell(row, stats.balls);
+    appendScorecardCell(row, stats.fours);
+    appendScorecardCell(row, stats.sixes);
+    appendScorecardCell(row, stats.balls ? (stats.runs * 100 / stats.balls).toFixed(1) : '—');
+    return row;
+  });
+  battingBody.replaceChildren(...battingRows);
+
+  const bowlingRows = Object.entries(innings.bowlingFigures)
+    .filter(([, stats]) => stats.balls > 0)
+    .map(([player, stats]) => {
+      const row = document.createElement('tr');
+      const playerCell = document.createElement('th');
+      playerCell.scope = 'row';
+      playerCell.textContent = player;
+      row.append(playerCell);
+      appendScorecardCell(row, oversText(stats.balls));
+      appendScorecardCell(row, stats.maidens);
+      appendScorecardCell(row, stats.runs);
+      appendScorecardCell(row, stats.wickets);
+      appendScorecardCell(row, stats.balls ? (stats.runs * 6 / stats.balls).toFixed(2) : '—');
+      return row;
+    });
+
+  if (!bowlingRows.length) {
+    const emptyRow = document.createElement('tr');
+    const emptyCell = document.createElement('td');
+    emptyCell.colSpan = 6;
+    emptyCell.textContent = 'Bowling figures will appear here.';
+    emptyRow.append(emptyCell);
+    bowlingRows.push(emptyRow);
+  }
+  bowlingBody.replaceChildren(...bowlingRows);
+}
+
+function appendScorecardCell(row, value) {
+  const cell = document.createElement('td');
+  cell.textContent = String(value);
+  row.append(cell);
 }
 
 function renderRecentBalls(innings) {
@@ -608,6 +666,7 @@ function playBall() {
 
   if (outcome === 'W') {
     innings.wickets += 1;
+    batterFigures.dismissed = true;
     if (innings.nextBatter < innings.battingLineup.length) {
       innings.batter = innings.battingLineup[innings.nextBatter];
       innings.nextBatter += 1;
@@ -813,11 +872,15 @@ function resetMatch() {
   scorecard.firstScore.innerHTML = '— <span>/ —</span>';
   scorecard.firstProgress.style.width = '0%';
   scorecard.firstNote.textContent = 'Set up a match to get started.';
+  scorecard.firstBatting.innerHTML = '<tr><td colspan="7">Set up a match to see batting figures.</td></tr>';
+  scorecard.firstBowling.innerHTML = '<tr><td colspan="6">Bowling figures will appear here.</td></tr>';
   scorecard.secondName.textContent = 'Pakistan';
   scorecard.secondDetail.textContent = 'The chase';
   scorecard.secondScore.innerHTML = '— <span>/ —</span>';
   scorecard.secondProgress.style.width = '0%';
   scorecard.secondNote.textContent = 'One innings at a time.';
+  scorecard.secondBatting.innerHTML = '<tr><td colspan="7">Set up a match to see batting figures.</td></tr>';
+  scorecard.secondBowling.innerHTML = '<tr><td colspan="6">Bowling figures will appear here.</td></tr>';
   updateTeamPicker();
 }
 
