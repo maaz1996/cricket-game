@@ -6,8 +6,8 @@
     <meta name="theme-color" content="#101812">
     <meta name="description" content="Pick two international sides and watch an animated cricket match under the stadium lights.">
     <title>Boundary Live — International Matchday</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="app.js" defer></script>
+    <link rel="stylesheet" href="style.css?v=3">
+    <script src="app.js?v=3" defer></script>
   </head>
   <body>
     <header class="topbar">
@@ -37,7 +37,7 @@
           <section class="scoreboard home-india away-pakistan" aria-label="Live scoreboard">
             <div class="scoreboard-grain" aria-hidden="true"></div>
             <div class="scoreboard-topline">
-              <span class="live-label" id="live-label"><span class="live-dot"></span> GET YOUR SEAT · MATCH NIGHT</span>
+              <span class="live-label" id="live-label"><span class="live-dot"></span> BOUNDARY LIVE · MATCH CENTRE</span>
               <span class="format-label" id="format-label">5-OVER SHOWDOWN</span>
             </div>
 
@@ -70,13 +70,36 @@
               <div class="score-divider"></div>
               <div class="scoreboard-footer">
                 <div class="target-block">
-                  <span class="footer-label" id="target-label">THE SHOWDOWN</span>
-                  <span class="footer-value" id="target-value">One stadium. Two nations.</span>
+                  <span class="footer-label" id="target-label">MATCH STATUS</span>
+                  <span class="footer-value" id="target-value">Toss pending · Match not started</span>
                 </div>
                 <div class="run-rate-block">
-                  <span class="footer-label" id="run-rate-label">MATCH FORMAT</span>
-                  <span class="footer-value" id="run-rate-value">Five overs. Every ball matters.</span>
+                  <span class="footer-label" id="run-rate-label">RUN RATE</span>
+                  <span class="footer-value" id="run-rate-value">0.00 runs per over</span>
                 </div>
+              </div>
+              <div class="broadcast-figures">
+                <section class="figures-panel" aria-label="Current batting figures">
+                  <div class="figures-heading"><span>BATTERS</span><span id="figures-batting-team">WAITING FOR TOSS</span></div>
+                  <div class="figures-table-wrap">
+                    <table class="figures-table">
+                      <thead><tr><th scope="col">BATTER</th><th scope="col">R</th><th scope="col">B</th><th scope="col">4s</th><th scope="col">6s</th><th scope="col">SR</th></tr></thead>
+                      <tbody>
+                        <tr><th scope="row" id="striker-name">—</th><td id="striker-runs">0</td><td id="striker-balls">0</td><td id="striker-fours">0</td><td id="striker-sixes">0</td><td id="striker-rate">0.0</td></tr>
+                        <tr><th scope="row" id="partner-name">—</th><td id="partner-runs">0</td><td id="partner-balls">0</td><td id="partner-fours">0</td><td id="partner-sixes">0</td><td id="partner-rate">0.0</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+                <section class="figures-panel bowling-panel" aria-label="Current bowler figures">
+                  <div class="figures-heading"><span>BOWLING</span><span id="figures-bowling-team">WAITING FOR TOSS</span></div>
+                  <div class="figures-table-wrap">
+                    <table class="figures-table">
+                      <thead><tr><th scope="col">BOWLER</th><th scope="col">O</th><th scope="col">M</th><th scope="col">R</th><th scope="col">W</th><th scope="col">ECON</th></tr></thead>
+                      <tbody><tr><th scope="row" id="bowler-figures-name">—</th><td id="bowler-overs">0.0</td><td id="bowler-maidens">0</td><td id="bowler-runs">0</td><td id="bowler-wickets">0</td><td id="bowler-economy">0.00</td></tr></tbody>
+                    </table>
+                  </div>
+                </section>
               </div>
             </div>
             <div class="scoreboard-bottom-edge" aria-hidden="true"><span></span><span></span><span></span></div>
@@ -276,14 +299,14 @@
           <section class="recent-card" aria-labelledby="recent-heading">
             <div class="section-heading">
               <div>
-                <p class="eyebrow"><span class="eyebrow-line"></span> OVER BY OVER</p>
-                <h2 id="recent-heading">The latest.</h2>
+                <p class="eyebrow"><span class="eyebrow-line"></span> LIVE INNINGS</p>
+                <h2 id="recent-heading">Over tracker</h2>
               </div>
-              <span class="delivery-count" id="delivery-count">NO BALLS YET</span>
+              <span class="delivery-count" id="delivery-count">OVER 1 · YET TO START</span>
             </div>
             <div class="recent-content" id="recent-content">
               <span class="empty-ball" aria-hidden="true">·</span>
-              <p>Your first delivery is just a tap away.</p>
+              <p>The first over will appear here.</p>
             </div>
           </section>
         </div>

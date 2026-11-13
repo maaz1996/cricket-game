@@ -79,6 +79,35 @@ const scorecard = {
   secondNote: document.querySelector('#innings-two-note'),
 };
 
+const figures = {
+  battingTeam: document.querySelector('#figures-batting-team'),
+  bowlingTeam: document.querySelector('#figures-bowling-team'),
+  striker: {
+    name: document.querySelector('#striker-name'),
+    runs: document.querySelector('#striker-runs'),
+    balls: document.querySelector('#striker-balls'),
+    fours: document.querySelector('#striker-fours'),
+    sixes: document.querySelector('#striker-sixes'),
+    rate: document.querySelector('#striker-rate'),
+  },
+  partner: {
+    name: document.querySelector('#partner-name'),
+    runs: document.querySelector('#partner-runs'),
+    balls: document.querySelector('#partner-balls'),
+    fours: document.querySelector('#partner-fours'),
+    sixes: document.querySelector('#partner-sixes'),
+    rate: document.querySelector('#partner-rate'),
+  },
+  bowler: {
+    name: document.querySelector('#bowler-figures-name'),
+    overs: document.querySelector('#bowler-overs'),
+    maidens: document.querySelector('#bowler-maidens'),
+    runs: document.querySelector('#bowler-runs'),
+    wickets: document.querySelector('#bowler-wickets'),
+    economy: document.querySelector('#bowler-economy'),
+  },
+};
+
 const outcomes = [0, 0, 1, 1, 1, 2, 2, 3, 4, 4, 4, 4, 6, 6, 'W'];
 const teamLineups = {
   India: { flag: '🇮🇳', kit: '#1380d3', lineup: ['A. Mehta', 'R. Kapoor', 'V. Khanna', 'A. Nair', 'D. Malhotra', 'K. Sethi', 'M. Bhatia', 'S. Reddy', 'H. Anand', 'P. Gill', 'T. Menon'] },
@@ -96,6 +125,12 @@ let playbackTimer = null;
 let animationTimer = null;
 
 function createInnings(teamName, battingLineup) {
+  const battingFigures = Object.fromEntries(
+    battingLineup.map((name) => [name, { runs: 0, balls: 0, fours: 0, sixes: 0 }]),
+  );
+  const bowlingFigures = Object.fromEntries(
+    battingLineup.map((name) => [name, { balls: 0, maidens: 0, runs: 0, wickets: 0, overRuns: 0 }]),
+  );
   return {
     teamName,
     runs: 0,
@@ -105,6 +140,8 @@ function createInnings(teamName, battingLineup) {
     sixes: 0,
     deliveries: [],
     battingLineup,
+    battingFigures,
+    bowlingFigures,
     batter: battingLineup[0],
     partner: battingLineup[1],
     nextBatter: 2,
@@ -117,6 +154,12 @@ function oversText(balls) {
 
 function runRate(innings) {
   return innings.balls ? (innings.runs / (innings.balls / 6)).toFixed(2) : '0.00';
+}
+
+function formatDescription(overs) {
+  if (overs === 20) return 'T20 FORMAT · 20 OVERS';
+  if (overs === 50) return 'ONE-DAY FORMAT · 50 OVERS';
+  return `${overs}-OVER CUSTOM MATCH`;
 }
 
 function activeInnings() {
@@ -149,8 +192,8 @@ function updateTeamPicker() {
   ui.setupHeading.textContent = `${home} vs ${away}.`;
   ui.pitchTitle.textContent = `${home} versus ${away} under the stadium lights`;
   ui.matchLabel.textContent = `${home.toUpperCase()} VS ${away.toUpperCase()} · MATCH NIGHT`;
-  ui.formatPreview.textContent = `${overs}-OVER INTERNATIONAL SHOWDOWN`;
-  ui.formatLabel.textContent = `${overs}-OVER SHOWDOWN`;
+  ui.formatPreview.textContent = formatDescription(overs);
+  ui.formatLabel.textContent = formatDescription(overs);
   ui.homeName.textContent = home.toUpperCase();
   ui.awayName.textContent = away.toUpperCase();
   ui.homeCrest.textContent = teamLineups[home].flag;
@@ -163,7 +206,7 @@ function updateTeamPicker() {
   ui.liveScore.textContent = '—';
   ui.liveScoreOvers.textContent = `${overs} OVERS PER SIDE`;
   ui.targetValue.textContent = `${home} vs ${away} · ${overs} overs each`;
-  ui.runRateValue.textContent = `${overs} overs · every ball has a story.`;
+  ui.runRateValue.textContent = '0.00 runs per over';
   ui.homeCrest.title = home;
   ui.awayCrest.title = away;
   document.querySelector('.scoreboard').setAttribute('aria-label', `${home} versus ${away} live scoreboard`);
@@ -171,6 +214,23 @@ function updateTeamPicker() {
   ui.pitchBatterName.textContent = teamLineups[home].lineup[0];
   ui.pitchPartnerName.textContent = teamLineups[home].lineup[1];
   ui.pitchBowlerName.textContent = teamLineups[away].lineup[0];
+  figures.battingTeam.textContent = `${home.toUpperCase()} · BATTING`;
+  figures.bowlingTeam.textContent = `${away.toUpperCase()} · FIELDING`;
+  figures.striker.name.textContent = `${teamLineups[home].lineup[0]}*`;
+  figures.partner.name.textContent = teamLineups[home].lineup[1];
+  [figures.striker, figures.partner].forEach((batter) => {
+    batter.runs.textContent = '0';
+    batter.balls.textContent = '0';
+    batter.fours.textContent = '0';
+    batter.sixes.textContent = '0';
+    batter.rate.textContent = '0.0';
+  });
+  figures.bowler.name.textContent = teamLineups[away].lineup[0];
+  figures.bowler.overs.textContent = '0.0';
+  figures.bowler.maidens.textContent = '0';
+  figures.bowler.runs.textContent = '0';
+  figures.bowler.wickets.textContent = '0';
+  figures.bowler.economy.textContent = '0.00';
   ui.battingTeamName.textContent = home;
   ui.miniBattingCrest.textContent = teamLineups[home].flag;
   ui.bowlingLine.textContent = `${teamLineups[away].lineup[0]} has the ball for ${away}.`;
@@ -208,14 +268,14 @@ function updateScoreboard() {
   ui.liveScoreTeam.textContent = `${batting.teamName.toUpperCase()} ${match.finished ? 'FINAL SCORE' : 'BATTING'}`;
   ui.liveScore.textContent = `${batting.runs}/${batting.wickets}`;
   ui.liveScoreOvers.textContent = `${oversText(batting.balls)} / ${match.overs} OVERS`;
-  ui.formatLabel.textContent = `${match.overs}-OVER SHOWDOWN`;
-  ui.scorecardFormat.textContent = `${match.home.toUpperCase()} VS ${match.away.toUpperCase()} · ${match.overs} OVERS`;
+  ui.formatLabel.textContent = formatDescription(match.overs);
+  ui.scorecardFormat.textContent = `${match.home.toUpperCase()} VS ${match.away.toUpperCase()} · ${formatDescription(match.overs)}`;
 
   if (match.finished) {
     ui.liveLabel.innerHTML = '<span class="live-dot"></span> MATCH COMPLETE';
     ui.inningsLabel.textContent = 'FULL TIME · THAT’S A WRAP';
   } else {
-    ui.liveLabel.innerHTML = '<span class="live-dot"></span> LIVE FROM THE STADIUM';
+    ui.liveLabel.innerHTML = '<span class="live-dot"></span> LIVE SIMULATION';
     ui.inningsLabel.innerHTML = `INNINGS ${match.currentInnings + 1}<span>·</span>${batting.teamName.toUpperCase()} BATTING`;
   }
 
@@ -242,10 +302,6 @@ function updateScoreboard() {
   ui.boundaryStat.innerHTML = `${stats.fours} <small>× 4</small> &nbsp; ${stats.sixes} <small>× 6</small>`;
   ui.wicketStat.innerHTML = `${stats.wickets} <small>down</small>`;
   ui.rateStat.innerHTML = `${runRate(stats)} <small>rpo</small>`;
-  ui.deliveryCount.textContent = batting.deliveries.length
-    ? `${batting.balls} ${batting.balls === 1 ? 'BALL' : 'BALLS'} BOWLED`
-    : 'NO BALLS YET';
-
   const teamLabel = batting.teamName;
   ui.battingLabel.textContent = match.finished ? 'MATCH COMPLETE' : `INNINGS ${match.currentInnings + 1} · AT THE CREASE`;
   ui.miniBattingCrest.textContent = teamLineups[teamLabel].flag;
@@ -257,6 +313,7 @@ function updateScoreboard() {
   const bowler = bowling.battingLineup[Math.floor(batting.balls / 6) % bowling.battingLineup.length];
   ui.bowlingLine.textContent = `${bowler} has the ball for ${bowling.teamName}.`;
   ui.pitchBowlerName.textContent = bowler;
+  updateBroadcastFigures(batting, bowling, bowler);
   ui.pitchScene.classList.toggle('batting-india', batting.teamName === 'India');
   ui.pitchScene.classList.toggle('batting-pakistan', batting.teamName === 'Pakistan');
   ui.pitchScene.classList.toggle('fielding-india', bowling.teamName === 'India');
@@ -270,6 +327,29 @@ function updateScoreboard() {
 
   updateScorecard(first, second, totalOvers);
   renderRecentBalls(batting);
+}
+
+function updateBroadcastFigures(batting, bowling, bowler) {
+  const updateBatter = (row, playerName, onStrike) => {
+    const stats = batting.battingFigures[playerName];
+    row.name.textContent = `${playerName}${onStrike ? '*' : ''}`;
+    row.runs.textContent = stats.runs;
+    row.balls.textContent = stats.balls;
+    row.fours.textContent = stats.fours;
+    row.sixes.textContent = stats.sixes;
+    row.rate.textContent = stats.balls ? (stats.runs * 100 / stats.balls).toFixed(1) : '0.0';
+  };
+  const stats = bowling.bowlingFigures[bowler];
+  figures.battingTeam.textContent = `${batting.teamName.toUpperCase()} · INNINGS ${match.currentInnings + 1}`;
+  figures.bowlingTeam.textContent = `${bowling.teamName.toUpperCase()} · BOWLING`;
+  updateBatter(figures.striker, batting.batter, true);
+  updateBatter(figures.partner, batting.partner, false);
+  figures.bowler.name.textContent = bowler;
+  figures.bowler.overs.textContent = oversText(stats.balls);
+  figures.bowler.maidens.textContent = stats.maidens;
+  figures.bowler.runs.textContent = stats.runs;
+  figures.bowler.wickets.textContent = stats.wickets;
+  figures.bowler.economy.textContent = stats.balls ? (stats.runs / (stats.balls / 6)).toFixed(2) : '0.00';
 }
 
 function syncPlaybackControls() {
@@ -312,9 +392,15 @@ function updateScorecard(first, second, totalOvers) {
 }
 
 function renderRecentBalls(innings) {
-  const recent = innings.deliveries.slice(-12);
+  const overIndex = Math.max(0, Math.ceil(innings.balls / 6) - 1);
+  const recent = innings.deliveries.slice(overIndex * 6, overIndex * 6 + 6);
+  const overRuns = recent.reduce((total, delivery) => total + (typeof delivery === 'number' ? delivery : 0), 0);
+  const overWickets = recent.filter((delivery) => delivery === 'W').length;
+  ui.deliveryCount.textContent = recent.length
+    ? `OVER ${overIndex + 1} · ${overRuns} RUN${overRuns === 1 ? '' : 'S'}${overWickets ? ` · ${overWickets} WKT` : ''}`
+    : `OVER ${overIndex + 1} · YET TO START`;
   if (!recent.length) {
-    ui.recentContent.innerHTML = '<span class="empty-ball" aria-hidden="true">·</span><p>Your first delivery is just a tap away.</p>';
+    ui.recentContent.innerHTML = '<span class="empty-ball" aria-hidden="true">·</span><p>The first over will appear here.</p>';
     return;
   }
 
@@ -330,7 +416,7 @@ function renderRecentBalls(innings) {
   });
   const over = document.createElement('span');
   over.className = 'over-mark';
-  over.textContent = `MOST RECENT ${recent.length} ${recent.length === 1 ? 'DELIVERY' : 'DELIVERIES'} · ${innings.teamName.toUpperCase()}`;
+  over.textContent = `${innings.teamName.toUpperCase()} · ${recent.length}/6 BALLS`;
   ui.recentContent.append(list, over);
 }
 
@@ -464,6 +550,23 @@ function playBall() {
   const striker = innings.batter;
   const bowlingInnings = match.innings[1 - match.currentInnings];
   const bowler = bowlingInnings.battingLineup[Math.floor(innings.balls / 6) % bowlingInnings.battingLineup.length];
+  const batterFigures = innings.battingFigures[striker];
+  const bowlerFigures = bowlingInnings.bowlingFigures[bowler];
+  batterFigures.balls += 1;
+  bowlerFigures.balls += 1;
+  if (typeof outcome === 'number') {
+    batterFigures.runs += outcome;
+    bowlerFigures.runs += outcome;
+    bowlerFigures.overRuns += outcome;
+    if (outcome === 4) batterFigures.fours += 1;
+    if (outcome === 6) batterFigures.sixes += 1;
+  } else {
+    bowlerFigures.wickets += 1;
+  }
+  if (ballNumber === 6) {
+    if (bowlerFigures.overRuns === 0) bowlerFigures.maidens += 1;
+    bowlerFigures.overRuns = 0;
+  }
   innings.balls += 1;
   innings.deliveries.push(outcome);
 
@@ -537,12 +640,12 @@ function startMatch(event) {
   ui.actionKicker.textContent = 'YOU’RE ON THE FIELD';
   ui.gameHeading.textContent = 'You’re in. Feel the roar.';
   ui.gameCopy.textContent = 'One tap. The toss is in. Settle in for the showdown.';
-  ui.matchLabel.textContent = `${home.toUpperCase()} VS ${away.toUpperCase()} · LIVE`;
+  ui.matchLabel.textContent = `${home.toUpperCase()} VS ${away.toUpperCase()} · SIMULATION`;
   const bowlingTeam = homeBatsFirst ? away : home;
-  ui.commentaryText.textContent = `${battingFirst} win the toss and choose to bat. ${bowlingTeam} take the field. The whole stadium is waiting for ball one!`;
-  ui.commentaryOver.textContent = 'FIRST INNINGS · LET THE SHOWDOWN BEGIN';
+  ui.commentaryText.textContent = `${battingFirst} win the toss and elect to bat. ${bowlingTeam} take the field. The players are ready for the first ball.`;
+  ui.commentaryOver.textContent = 'INNINGS 1 · TOSS RESULT';
   ui.pitchStatus.textContent = `${battingFirst.toUpperCase()} BATTING · ${bowlingTeam.toUpperCase()} FIELDING`;
-  ui.scorecardFormat.textContent = `${home.toUpperCase()} VS ${away.toUpperCase()} · ${overs} OVER SHOWDOWN`;
+  ui.scorecardFormat.textContent = `${home.toUpperCase()} VS ${away.toUpperCase()} · ${formatDescription(overs)}`;
   const pace = document.querySelector('input[name="setup-pace"]:checked').value;
   document.querySelector(`input[name="game-pace"][value="${pace}"]`).checked = true;
   updateScoreboard();
@@ -624,9 +727,9 @@ function resetMatch() {
   resultView.hidden = true;
   ui.actionKicker.textContent = 'GET THINGS ROLLING';
   ui.matchLabel.textContent = 'THE GRAND SHOWDOWN';
-  ui.liveLabel.innerHTML = '<span class="live-dot"></span> GET YOUR SEAT · MATCH NIGHT';
+  ui.liveLabel.innerHTML = '<span class="live-dot"></span> BOUNDARY LIVE · MATCH CENTRE';
   ui.inningsLabel.innerHTML = 'INTERNATIONAL SHOWDOWN <span>·</span> UNDER THE LIGHTS';
-  ui.formatLabel.textContent = '5-OVER SHOWDOWN';
+  ui.formatLabel.textContent = formatDescription(5);
   ui.homeName.textContent = 'INDIA';
   ui.awayName.textContent = 'PAKISTAN';
   ui.homeCrest.textContent = '🇮🇳';
@@ -637,18 +740,18 @@ function resetMatch() {
   ui.awayScore.innerHTML = '—<span class="team-wickets"></span>';
   ui.homeOvers.textContent = 'INDIA · 0.0 OVERS';
   ui.awayOvers.textContent = 'PAKISTAN · 0.0 OVERS';
-  ui.targetLabel.textContent = 'THE SHOWDOWN';
-  ui.targetValue.textContent = 'One stadium. Two nations.';
-  ui.runRateLabel.textContent = 'MATCH FORMAT';
-  ui.runRateValue.textContent = 'Five overs · every ball matters.';
+  ui.targetLabel.textContent = 'MATCH STATUS';
+  ui.targetValue.textContent = 'Toss pending · Match not started';
+  ui.runRateLabel.textContent = 'RUN RATE';
+  ui.runRateValue.textContent = '0.00 runs per over';
   ui.boundaryStat.innerHTML = '0 <small>× 4</small> &nbsp; 0 <small>× 6</small>';
   ui.wicketStat.innerHTML = '0 <small>down</small>';
   ui.rateStat.innerHTML = '— <small>rpo</small>';
-  ui.deliveryCount.textContent = 'NO BALLS YET';
-  ui.recentContent.innerHTML = '<span class="empty-ball" aria-hidden="true">·</span><p>Your first delivery is just a tap away.</p>';
+  ui.deliveryCount.textContent = 'OVER 1 · YET TO START';
+  ui.recentContent.innerHTML = '<span class="empty-ball" aria-hidden="true">·</span><p>The first over will appear here.</p>';
   ui.commentaryText.textContent = 'The floodlights are on. India vs Pakistan. The whole ground is holding its breath.';
-  ui.commentaryOver.textContent = 'MATCH NIGHT · YOUR SEAT IS WAITING';
-  ui.scorecardFormat.textContent = 'INDIA VS PAKISTAN · 5 OVER SHOWDOWN';
+  ui.commentaryOver.textContent = 'MATCH CENTRE · SIMULATED FIXTURE';
+  ui.scorecardFormat.textContent = `INDIA VS PAKISTAN · ${formatDescription(5)}`;
   ui.pitchStatus.textContent = 'READY FOR THE FIRST BALL';
   ui.pitchBatterName.textContent = 'Waiting for the toss';
   ui.pitchPartnerName.textContent = 'The crowd is ready';

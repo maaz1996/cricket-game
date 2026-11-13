@@ -4,9 +4,12 @@ A browser-based international cricket watch party. Choose two sides from India,
 Pakistan, Australia, England, South Africa, New Zealand, Sri Lanka, and
 Bangladesh. Choose 5, 10, 20, or 50 overs per innings, then watch the match play
 out automatically with an at-a-glance central score, animated players, stadium
-crowd reactions, and ball-by-ball commentary. Choose ball-by-ball or quicker
-over-by-over viewing, pause or take control any time. The illustrated players
-and lineups are fictional.
+crowd reactions, live batter and bowler figures, an over tracker, and
+ball-by-ball commentary. Twenty overs use a T20-style format, 50 overs a
+one-day-style format, and other lengths are marked as custom. Choose
+ball-by-ball or quicker over-by-over viewing, pause or take control any time.
+The illustrated players and lineups are fictional; this is a match simulation,
+not a live broadcast.
 
 ## Run locally
 
