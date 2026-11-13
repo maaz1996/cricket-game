@@ -6,8 +6,8 @@
     <meta name="theme-color" content="#101812">
     <meta name="description" content="Pick two international sides and watch an animated cricket match under the stadium lights.">
     <title>Boundary Live — International Matchday</title>
-    <link rel="stylesheet" href="style.css?v=5">
-    <script src="app.js?v=5" defer></script>
+    <link rel="stylesheet" href="style.css?v=7">
+    <script src="app.js?v=7" defer></script>
   </head>
   <body>
     <header class="topbar">
@@ -22,41 +22,41 @@
       <div class="season-label venue-label"><span class="season-dot"></span> LIVE FROM THE STADIUM <span class="season-divider">/</span> MATCH NIGHT</div>
     </header>
 
-    <main id="match" class="page-shell">
+    <main id="match" class="page-shell setup-active">
       <section class="page-intro">
         <div>
-          <p class="eyebrow"><span class="eyebrow-line"></span> THE RIVALRY. THE ROAR. THE MOMENT.</p>
-          <h1 id="page-title">India <span>vs</span> Pakistan.</h1>
-          <p class="intro-copy">One stadium. Two teams. Every ball has a story.</p>
+          <p class="eyebrow"><span class="eyebrow-line"></span> YOUR MATCH. YOUR CALL.</p>
+          <h1 id="page-title">Choose your teams.</h1>
+          <p class="intro-copy">Pick the sides, set the overs, and settle in for every ball.</p>
         </div>
-        <div class="match-id"><span class="match-id-icon">✳</span><span id="match-label">THE GRAND SHOWDOWN</span></div>
+        <div class="match-id"><span class="match-id-icon">✳</span><span id="match-label">SELECT YOUR SIDES</span></div>
       </section>
 
-      <section class="match-layout" aria-label="International cricket match">
+      <section class="match-layout" aria-label="Cricket match setup and live coverage">
         <div class="main-column">
-          <section class="scoreboard home-india away-pakistan" aria-label="Live scoreboard">
+          <section class="scoreboard" aria-label="Live scoreboard">
             <div class="scoreboard-grain" aria-hidden="true"></div>
             <div class="scoreboard-topline">
-              <span class="live-label" id="live-label"><span class="live-dot"></span> BOUNDARY LIVE · MATCH CENTRE</span>
+              <span class="live-label" id="live-label"><span class="live-dot"></span> MATCH CENTRE</span>
               <span class="format-label" id="format-label">5-OVER SHOWDOWN</span>
             </div>
 
             <div class="scoreboard-content">
-              <div class="innings-label" id="innings-label">INTERNATIONAL SHOWDOWN <span>·</span> UNDER THE LIGHTS</div>
+              <div class="innings-label" id="innings-label">YOUR MATCH <span>·</span> UNDER THE LIGHTS</div>
               <div class="toss-ribbon" id="toss-ribbon"><span>THE TOSS</span><strong id="toss-summary">Toss pending</strong></div>
               <div class="teams-score">
                 <div class="team-block team-home">
                   <div class="team-identity">
-                    <span class="team-crest crest-home" id="home-crest">🇮🇳</span>
-                    <span class="team-name" id="home-name">INDIA</span>
+                    <span class="team-crest crest-home" id="home-crest">🏏</span>
+                    <span class="team-name" id="home-name">HOME TEAM</span>
                   </div>
                   <div class="team-total" id="home-score">—<span class="team-wickets"></span></div>
-                  <div class="team-overs" id="home-overs">0.0 OVERS</div>
+                  <div class="team-overs" id="home-overs">AWAITING SELECTION</div>
                 </div>
                 <div class="live-score-center" aria-live="polite">
-                  <span class="live-score-team" id="live-score-team">READY FOR THE FIRST BALL</span>
+                  <span class="live-score-team" id="live-score-team">SELECT TEAMS TO BEGIN</span>
                   <strong class="live-score" id="live-score">—</strong>
-                  <span class="live-score-overs" id="live-score-overs">5 OVERS PER SIDE</span>
+                  <span class="live-score-overs" id="live-score-overs">OVERS PER SIDE</span>
                   <div class="match-result-center" id="match-result-center" hidden>
                     <span class="result-center-kicker">FULL TIME · RESULT</span>
                     <strong id="result-center-winner">MATCH COMPLETE</strong>
@@ -66,11 +66,11 @@
                 </div>
                 <div class="team-block team-away">
                   <div class="team-identity">
-                    <span class="team-crest crest-away" id="away-crest">🇵🇰</span>
-                    <span class="team-name" id="away-name">PAKISTAN</span>
+                    <span class="team-crest crest-away" id="away-crest">🏏</span>
+                    <span class="team-name" id="away-name">AWAY TEAM</span>
                   </div>
                   <div class="team-total" id="away-score">—<span class="team-wickets"></span></div>
-                  <div class="team-overs" id="away-overs">0.0 OVERS</div>
+                  <div class="team-overs" id="away-overs">AWAITING SELECTION</div>
                 </div>
               </div>
 
@@ -125,8 +125,8 @@
               <div class="pitch-live" id="pitch-live"><span class="live-dot"></span><span id="pitch-status">READY FOR THE FIRST BALL</span></div>
             </div>
             <div class="pitch-scene-wrap">
-              <svg class="pitch-scene batting-india fielding-pakistan" id="pitch-scene" viewBox="0 0 690 280" role="img" aria-labelledby="pitch-title pitch-description">
-                <title id="pitch-title">India versus Pakistan under the stadium lights</title>
+              <svg class="pitch-scene" id="pitch-scene" viewBox="0 0 690 280" role="img" aria-labelledby="pitch-title pitch-description">
+                <title id="pitch-title">A cricket ground under the stadium lights</title>
                 <desc id="pitch-description">A packed international night crowd waves team flags as the bowler runs in, the batter swings, and the fielders chase the ball.</desc>
                 <defs>
                   <linearGradient id="sky-gradient" x1="0" x2="0" y1="0" y2="1">
@@ -329,16 +329,17 @@
               <span class="card-heading-icon" aria-hidden="true">✳</span>
             </div>
             <div id="setup-view">
-              <h2 id="setup-heading">India vs Pakistan.</h2>
-              <p class="card-copy">The lights are on. The stands are full. You’re courtside for every ball.</p>
+              <h2 id="setup-heading">Choose your teams.</h2>
+              <p class="card-copy">Choose two sides and a match length. Then watch the game unfold.</p>
               <form id="match-form">
                 <div class="team-picker">
                   <label class="team-picker-side" for="home-team">
                     <span class="team-picker-label">HOME TEAM</span>
                     <span class="team-picker-control">
-                      <span class="team-picker-flag" id="home-team-flag" aria-hidden="true">🇮🇳</span>
-                      <select id="home-team" name="home" aria-label="Choose the home team">
-                        <option value="India" selected>India</option>
+                      <span class="team-picker-flag" id="home-team-flag" aria-hidden="true">🏏</span>
+                      <select id="home-team" name="home" aria-label="Choose the home team" required>
+                        <option value="" selected disabled>Choose team</option>
+                        <option value="India">India</option>
                         <option value="Pakistan">Pakistan</option>
                         <option value="Australia">Australia</option>
                         <option value="England">England</option>
@@ -353,9 +354,10 @@
                   <label class="team-picker-side" for="away-team">
                     <span class="team-picker-label">AWAY TEAM</span>
                     <span class="team-picker-control">
-                      <span class="team-picker-flag" id="away-team-flag" aria-hidden="true">🇵🇰</span>
-                      <select id="away-team" name="away" aria-label="Choose the away team">
-                        <option value="Pakistan" selected>Pakistan</option>
+                      <span class="team-picker-flag" id="away-team-flag" aria-hidden="true">🏏</span>
+                      <select id="away-team" name="away" aria-label="Choose the away team" required>
+                        <option value="" selected disabled>Choose team</option>
+                        <option value="Pakistan">Pakistan</option>
                         <option value="India">India</option>
                         <option value="Australia">Australia</option>
                         <option value="England">England</option>
@@ -430,7 +432,7 @@
               <span class="commentary-live"><span class="live-dot"></span> THE CROWD’S ROARING</span>
               <span class="commentary-decoration" aria-hidden="true">✳</span>
             </div>
-            <p class="commentary-text" id="commentary-text">The floodlights are on. India vs Pakistan. The whole ground is holding its breath.</p>
+            <p class="commentary-text" id="commentary-text">The floodlights are on. The whole ground is holding its breath.</p>
             <span class="commentary-over" id="commentary-over">MATCH NIGHT · YOUR SEAT IS WAITING</span>
           </section>
 
@@ -444,11 +446,11 @@
             <p class="eyebrow"><span class="eyebrow-line"></span> THE FULL STORY</p>
             <h2 id="scorecard-heading">The scorecard.</h2>
           </div>
-          <span class="scorecard-format" id="scorecard-format">INDIA VS PAKISTAN · 5 OVER SHOWDOWN</span>
+          <span class="scorecard-format" id="scorecard-format">SELECT TEAMS TO BEGIN</span>
         </div>
         <div class="scorecard-columns">
           <article class="innings-card">
-            <div class="innings-card-heading"><span class="innings-number">01</span><div><h3 id="innings-one-name">India</h3><span id="innings-one-detail">Waiting for the first ball</span></div></div>
+            <div class="innings-card-heading"><span class="innings-number">01</span><div><h3 id="innings-one-name">Team batting first</h3><span id="innings-one-detail">Waiting for the first ball</span></div></div>
             <div class="innings-card-score" id="innings-one-score">— <span> / —</span></div>
             <div class="innings-progress"><span id="innings-one-progress"></span></div>
             <p class="innings-footnote" id="innings-one-note">Set up a match to get started.</p>
@@ -472,7 +474,7 @@
             </section>
           </article>
           <article class="innings-card">
-            <div class="innings-card-heading"><span class="innings-number">02</span><div><h3 id="innings-two-name">Pakistan</h3><span id="innings-two-detail">The chase</span></div></div>
+            <div class="innings-card-heading"><span class="innings-number">02</span><div><h3 id="innings-two-name">Chasing team</h3><span id="innings-two-detail">The chase</span></div></div>
             <div class="innings-card-score" id="innings-two-score">— <span>/ —</span></div>
             <div class="innings-progress"><span id="innings-two-progress"></span></div>
             <p class="innings-footnote" id="innings-two-note">One innings at a time.</p>

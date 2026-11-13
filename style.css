@@ -56,6 +56,12 @@ button { cursor: pointer; }
 .season-divider { color: #c1c6bb; }
 
 .page-shell { width: min(1110px, calc(100% - 64px)); margin: 0 auto; }
+.setup-active .match-layout { display: block; }
+.setup-active .main-column { display: none; }
+.setup-active .side-column { max-width: 700px; display: block; margin: 0 auto; }
+.setup-active .side-column > :not(.action-card) { display: none; }
+.setup-active #scorecard { display: none; }
+.match-active .page-intro { display: none; }
 .page-intro { display: flex; justify-content: space-between; align-items: flex-end; padding: 57px 0 31px; }
 .eyebrow { margin: 0; display: flex; align-items: center; gap: 9px; color: #828980; font-family: var(--mono); font-size: 9px; font-weight: 400; letter-spacing: 1.05px; }
 .eyebrow-line { width: 17px; height: 1px; display: inline-block; background: #7a9a70; }

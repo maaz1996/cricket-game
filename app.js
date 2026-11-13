@@ -195,26 +195,29 @@ function updateTeamPicker() {
   const home = ui.homeTeamSelect.value;
   const away = ui.awayTeamSelect.value;
   const overs = Number(document.querySelector('input[name="overs"]:checked').value);
-  ui.homeTeamFlag.textContent = teamLineups[home].flag;
-  ui.awayTeamFlag.textContent = teamLineups[away].flag;
-  ui.homeCrowdFlag.textContent = teamLineups[home].flag;
-  ui.awayCrowdFlag.textContent = teamLineups[away].flag;
-  ui.homeTeamSelect.setCustomValidity(home === away ? 'Choose a different away team.' : '');
-  ui.pageTitle.innerHTML = `${home} <span>vs</span> ${away}.`;
-  ui.setupHeading.textContent = `${home} vs ${away}.`;
-  ui.pitchTitle.textContent = `${home} versus ${away} under the stadium lights`;
-  ui.matchLabel.textContent = `${home.toUpperCase()} VS ${away.toUpperCase()} · MATCH NIGHT`;
+  const homeTeam = teamLineups[home];
+  const awayTeam = teamLineups[away];
+  const hasBothTeams = Boolean(homeTeam && awayTeam);
+  const isValidMatchup = hasBothTeams && home !== away;
+  ui.homeTeamFlag.textContent = homeTeam?.flag ?? '🏏';
+  ui.awayTeamFlag.textContent = awayTeam?.flag ?? '🏏';
+  ui.homeCrowdFlag.textContent = homeTeam?.flag ?? '🏏';
+  ui.awayCrowdFlag.textContent = awayTeam?.flag ?? '🏏';
+  ui.homeTeamSelect.setCustomValidity(hasBothTeams && home === away ? 'Choose a different away team.' : '');
+  ui.pageTitle.textContent = 'Choose your teams.';
+  ui.setupHeading.textContent = 'Choose your teams.';
   ui.formatPreview.textContent = formatDescription(overs);
   ui.formatLabel.textContent = formatDescription(overs);
-  ui.homeName.textContent = home.toUpperCase();
-  ui.awayName.textContent = away.toUpperCase();
-  ui.homeCrest.textContent = teamLineups[home].flag;
-  ui.awayCrest.textContent = teamLineups[away].flag;
-  ui.homeCrest.style.backgroundColor = teamLineups[home].kit;
-  ui.awayCrest.style.backgroundColor = teamLineups[away].kit;
-  ui.homeOvers.textContent = `${home.toUpperCase()} · READY TO BAT`;
-  ui.awayOvers.textContent = `${away.toUpperCase()} · UNDER THE LIGHTS`;
-  ui.liveScoreTeam.textContent = 'MATCH PREVIEW';
+  ui.matchLabel.textContent = 'SELECT YOUR SIDES';
+  ui.homeName.textContent = homeTeam ? home.toUpperCase() : 'HOME TEAM';
+  ui.awayName.textContent = awayTeam ? away.toUpperCase() : 'AWAY TEAM';
+  ui.homeCrest.textContent = homeTeam?.flag ?? '🏏';
+  ui.awayCrest.textContent = awayTeam?.flag ?? '🏏';
+  ui.homeCrest.style.backgroundColor = homeTeam?.kit ?? '';
+  ui.awayCrest.style.backgroundColor = awayTeam?.kit ?? '';
+  ui.homeOvers.textContent = 'AWAITING FIRST BALL';
+  ui.awayOvers.textContent = 'AWAITING FIRST BALL';
+  ui.liveScoreTeam.textContent = isValidMatchup ? 'READY FOR THE FIRST BALL' : 'SELECT TEAMS TO BEGIN';
   ui.liveScore.textContent = '—';
   ui.liveScoreOvers.textContent = `${overs} OVERS PER SIDE`;
   ui.tossSummary.textContent = 'The toss decides who bats first';
@@ -222,19 +225,26 @@ function updateTeamPicker() {
   ui.firstInningsScore.textContent = 'Waiting for the first ball';
   ui.matchResultCenter.hidden = true;
   ui.scoreboard.classList.remove('match-finished');
-  ui.targetValue.textContent = `${home} vs ${away} · ${overs} overs each`;
+  ui.scoreboard.classList.toggle('home-india', home === 'India');
+  ui.scoreboard.classList.toggle('home-pakistan', home === 'Pakistan');
+  ui.scoreboard.classList.toggle('away-india', away === 'India');
+  ui.scoreboard.classList.toggle('away-pakistan', away === 'Pakistan');
+  ui.targetValue.textContent = isValidMatchup ? `${home} vs ${away} · ${overs} overs each` : 'Choose two different teams to begin';
   ui.runRateValue.textContent = '0.00 runs per over';
-  ui.homeCrest.title = home;
-  ui.awayCrest.title = away;
-  document.querySelector('.scoreboard').setAttribute('aria-label', `${home} versus ${away} live scoreboard`);
+  ui.homeCrest.title = home || 'Home team';
+  ui.awayCrest.title = away || 'Away team';
+  ui.scoreboard.setAttribute('aria-label', isValidMatchup ? `${home} versus ${away} live scoreboard` : 'Live match scoreboard');
+  if (!isValidMatchup) return;
+
+  ui.pitchTitle.textContent = `${home} versus ${away} under the stadium lights`;
   updatePitchKits(home, away);
-  ui.pitchBatterName.textContent = teamLineups[home].lineup[0];
-  ui.pitchPartnerName.textContent = teamLineups[home].lineup[1];
-  ui.pitchBowlerName.textContent = teamLineups[away].lineup[0];
+  ui.pitchBatterName.textContent = homeTeam.lineup[0];
+  ui.pitchPartnerName.textContent = homeTeam.lineup[1];
+  ui.pitchBowlerName.textContent = awayTeam.lineup[0];
   figures.battingTeam.textContent = `${home.toUpperCase()} · BATTING`;
   figures.bowlingTeam.textContent = `${away.toUpperCase()} · FIELDING`;
-  figures.striker.name.textContent = `${teamLineups[home].lineup[0]}*`;
-  figures.partner.name.textContent = teamLineups[home].lineup[1];
+  figures.striker.name.textContent = `${homeTeam.lineup[0]}*`;
+  figures.partner.name.textContent = homeTeam.lineup[1];
   [figures.striker, figures.partner].forEach((batter) => {
     batter.runs.textContent = '0';
     batter.balls.textContent = '0';
@@ -242,15 +252,15 @@ function updateTeamPicker() {
     batter.sixes.textContent = '0';
     batter.rate.textContent = '0.0';
   });
-  figures.bowler.name.textContent = teamLineups[away].lineup[0];
+  figures.bowler.name.textContent = awayTeam.lineup[0];
   figures.bowler.overs.textContent = '0.0';
   figures.bowler.maidens.textContent = '0';
   figures.bowler.runs.textContent = '0';
   figures.bowler.wickets.textContent = '0';
   figures.bowler.economy.textContent = '0.00';
   ui.battingTeamName.textContent = home;
-  ui.miniBattingCrest.textContent = teamLineups[home].flag;
-  ui.bowlingLine.textContent = `${teamLineups[away].lineup[0]} has the ball for ${away}.`;
+  ui.miniBattingCrest.textContent = homeTeam.flag;
+  ui.bowlingLine.textContent = `${awayTeam.lineup[0]} has the ball for ${away}.`;
   ui.commentaryText.textContent = `The floodlights are on. ${home} vs ${away}. The whole ground is holding its breath.`;
   scorecard.firstName.textContent = home;
   scorecard.secondName.textContent = away;
@@ -425,11 +435,11 @@ function updateScorecard(first, second, totalOvers) {
     ? `${second.fours} fours · ${second.sixes} sixes · RR ${runRate(second)}`
     : 'One innings at a time.';
 
-  renderInningsFigures(first, scorecard.firstBatting, scorecard.firstBowling);
-  renderInningsFigures(second, scorecard.secondBatting, scorecard.secondBowling);
+  renderInningsFigures(first, second.bowlingFigures, scorecard.firstBatting, scorecard.firstBowling);
+  renderInningsFigures(second, first.bowlingFigures, scorecard.secondBatting, scorecard.secondBowling);
 }
 
-function renderInningsFigures(innings, battingBody, bowlingBody) {
+function renderInningsFigures(innings, bowlingFigures, battingBody, bowlingBody) {
   const battingRows = innings.battingLineup.map((player) => {
     const stats = innings.battingFigures[player];
     const active = player === innings.batter || player === innings.partner;
@@ -449,7 +459,7 @@ function renderInningsFigures(innings, battingBody, bowlingBody) {
   });
   battingBody.replaceChildren(...battingRows);
 
-  const bowlingRows = Object.entries(innings.bowlingFigures)
+  const bowlingRows = Object.entries(bowlingFigures)
     .filter(([, stats]) => stats.balls > 0)
     .map(([player, stats]) => {
       const row = document.createElement('tr');
@@ -702,12 +712,13 @@ function startMatch(event) {
   const overs = Number(document.querySelector('input[name="overs"]:checked').value);
   const home = ui.homeTeamSelect.value;
   const away = ui.awayTeamSelect.value;
-  if (home === away) {
-    ui.homeTeamSelect.setCustomValidity('Choose two different teams to start a match.');
+  if (!home || !away || home === away) {
+    ui.homeTeamSelect.setCustomValidity(home === away && home ? 'Choose two different teams to start a match.' : 'Choose both teams to start a match.');
     ui.homeTeamSelect.reportValidity();
     return;
   }
   ui.homeTeamSelect.setCustomValidity('');
+  document.querySelector('#match').classList.replace('setup-active', 'match-active');
   const tossWinner = Math.random() < 0.5 ? home : away;
   const tossDecision = Math.random() < 0.5 ? 'bat' : 'bowl';
   const battingFirst = tossDecision === 'bat' ? tossWinner : (tossWinner === home ? away : home);
@@ -825,20 +836,23 @@ function resetMatch() {
   gameView.hidden = true;
   resultView.hidden = true;
   ui.actionKicker.textContent = 'GET THINGS ROLLING';
-  ui.matchLabel.textContent = 'THE GRAND SHOWDOWN';
-  ui.liveLabel.innerHTML = '<span class="live-dot"></span> BOUNDARY LIVE · MATCH CENTRE';
-  ui.inningsLabel.innerHTML = 'INTERNATIONAL SHOWDOWN <span>·</span> UNDER THE LIGHTS';
+  document.querySelector('#match').classList.replace('match-active', 'setup-active');
+  ui.pageTitle.textContent = 'Choose your teams.';
+  ui.matchLabel.textContent = 'SELECT YOUR SIDES';
+  ui.liveLabel.innerHTML = '<span class="live-dot"></span> MATCH CENTRE';
+  ui.inningsLabel.innerHTML = 'YOUR MATCH <span>·</span> UNDER THE LIGHTS';
   ui.formatLabel.textContent = formatDescription(5);
-  ui.homeName.textContent = 'INDIA';
-  ui.awayName.textContent = 'PAKISTAN';
-  ui.homeCrest.textContent = '🇮🇳';
-  ui.awayCrest.textContent = '🇵🇰';
-  document.querySelector('.scoreboard').classList.remove('home-pakistan', 'away-india');
-  document.querySelector('.scoreboard').classList.add('home-india', 'away-pakistan');
+  ui.homeName.textContent = 'HOME TEAM';
+  ui.awayName.textContent = 'AWAY TEAM';
+  ui.homeCrest.textContent = '🏏';
+  ui.awayCrest.textContent = '🏏';
+  ui.scoreboard.classList.remove('home-india', 'home-pakistan', 'away-india', 'away-pakistan');
   ui.homeScore.innerHTML = '—<span class="team-wickets"></span>';
   ui.awayScore.innerHTML = '—<span class="team-wickets"></span>';
-  ui.homeOvers.textContent = 'INDIA · 0.0 OVERS';
-  ui.awayOvers.textContent = 'PAKISTAN · 0.0 OVERS';
+  ui.homeOvers.textContent = 'AWAITING SELECTION';
+  ui.awayOvers.textContent = 'AWAITING SELECTION';
+  ui.liveScoreTeam.textContent = 'SELECT TEAMS TO BEGIN';
+  ui.liveScore.textContent = '—';
   ui.targetLabel.textContent = 'MATCH STATUS';
   ui.targetValue.textContent = 'Toss pending · Match not started';
   ui.runRateLabel.textContent = 'RUN RATE';
@@ -848,9 +862,9 @@ function resetMatch() {
   ui.rateStat.innerHTML = '— <small>rpo</small>';
   ui.deliveryCount.textContent = 'OVER 1 · YET TO START';
   ui.recentContent.innerHTML = '<span class="empty-ball" aria-hidden="true">·</span><p>The first over will appear here.</p>';
-  ui.commentaryText.textContent = 'The floodlights are on. India vs Pakistan. The whole ground is holding its breath.';
+  ui.commentaryText.textContent = 'The floodlights are on. The whole ground is holding its breath.';
   ui.commentaryOver.textContent = 'MATCH CENTRE · SIMULATED FIXTURE';
-  ui.scorecardFormat.textContent = `INDIA VS PAKISTAN · ${formatDescription(5)}`;
+  ui.scorecardFormat.textContent = 'SELECT TEAMS TO BEGIN';
   ui.pitchStatus.textContent = 'READY FOR THE FIRST BALL';
   ui.pitchBatterName.textContent = 'Waiting for the toss';
   ui.pitchPartnerName.textContent = 'The crowd is ready';
@@ -867,14 +881,14 @@ function resetMatch() {
   ui.autoplayButton.childNodes[0].textContent = 'AUTO-PLAY MATCH ';
   ui.bowlButton.disabled = false;
   ui.overButton.disabled = false;
-  scorecard.firstName.textContent = 'India';
+  scorecard.firstName.textContent = 'Team batting first';
   scorecard.firstDetail.textContent = 'Waiting for the first ball';
   scorecard.firstScore.innerHTML = '— <span>/ —</span>';
   scorecard.firstProgress.style.width = '0%';
   scorecard.firstNote.textContent = 'Set up a match to get started.';
   scorecard.firstBatting.innerHTML = '<tr><td colspan="7">Set up a match to see batting figures.</td></tr>';
   scorecard.firstBowling.innerHTML = '<tr><td colspan="6">Bowling figures will appear here.</td></tr>';
-  scorecard.secondName.textContent = 'Pakistan';
+  scorecard.secondName.textContent = 'Chasing team';
   scorecard.secondDetail.textContent = 'The chase';
   scorecard.secondScore.innerHTML = '— <span>/ —</span>';
   scorecard.secondProgress.style.width = '0%';
